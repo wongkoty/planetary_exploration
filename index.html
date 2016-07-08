@@ -22,6 +22,10 @@
 			return Math.log(radius) / Math.log(10)
 		};
 
+		var rotationAroundSunRelativeToEarth = function(earthDays) {
+			return earthDays / 365
+		};
+
 		// set up scenes
 		var scene = new THREE.Scene();
 		// scene.add( fog ); 
@@ -42,7 +46,7 @@
 		// setting up camera controls
 		controls = new THREE.OrbitControls( camera );
 				controls.minDistance = 10;
-				controls.maxDistance = 800;
+				controls.maxDistance = 2000;
 
 		//3D Axis helper for center of scene
 		scene.add( new THREE.AxisHelper( 20 ) );
@@ -122,6 +126,16 @@
 		venus.translateY(orbitalScaler(35.96))
 
 		// ==================================
+		// 	Setting up Sun/Venus
+		// ==================================
+		var sunVenusGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunVenus = new THREE.Mesh( sunVenusGeometry, material );
+		
+		// changes the orbital path
+		scene.add( sunVenus );
+
+		// ==================================
 		// 	Setting up Venus
 		// ==================================
 		var venusGeometry = new THREE.SphereGeometry(radiusLog(3760), 32, 32 );
@@ -132,7 +146,7 @@
 		var venus = new THREE.Mesh( venusGeometry, material );
 		
 		// adds venus to sun. Might have to add to something else to change orbital path
-		sun.add(venus);
+		sunVenus.add(venus);
 		venus.translateY(orbitalScaler(67.24))
 
 		// ==================================
@@ -175,6 +189,16 @@
 		moon.translateY(8.5);
 
 		// ==================================
+		// 	Setting up Sun/Mars
+		// ==================================
+		var sunMarsGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunMars = new THREE.Mesh( sunMarsGeometry, material );
+		
+		// changes the orbital path
+		scene.add( sunMars );
+
+		// ==================================
 		// 	Setting up Mars
 		// ==================================
 		var marsGeometry = new THREE.SphereGeometry(radiusLog(2106), 32, 32 );
@@ -184,8 +208,18 @@
 		var material = new THREE.MeshBasicMaterial({map: marsTexture});
 		var mars = new THREE.Mesh( marsGeometry, material );
 
-		sun.add(mars);
+		sunMars.add(mars);
 		mars.translateY(orbitalScaler(141.6));
+
+		// ==================================
+		// 	Setting up Sun/Jupiter
+		// ==================================
+		var sunJupiterGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunJupiter = new THREE.Mesh( sunJupiterGeometry, material );
+		
+		// changes the orbital path
+		scene.add( sunJupiter );
 
 		// ==================================
 		// 	Setting up Jupiter
@@ -198,8 +232,16 @@
 		var jupiter = new THREE.Mesh( jupiterGeometry, material );
 
 		// add the moon to the earth
-		sun.add(jupiter);
+		sunJupiter.add(jupiter);
 		jupiter.translateY(orbitalScaler(483.8));
+
+		// ==================================
+		// 	Setting up Sun/Saturn
+		// ==================================
+		var sunSaturnGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunSaturn = new THREE.Mesh( sunSaturnGeometry, material );
+		scene.add( sunSaturn );
 
 		// ==================================
 		// 	Setting up Saturn
@@ -212,8 +254,16 @@
 		var saturn = new THREE.Mesh( saturnGeometry, material );
 
 		// add the moon to the earth
-		sun.add(saturn);
+		sunSaturn.add(saturn);
 		saturn.translateY(orbitalScaler(888.2));
+
+		// ==================================
+		// 	Setting up Sun/Uranus
+		// ==================================
+		var sunUranusGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunUranus = new THREE.Mesh( sunUranusGeometry, material );
+		scene.add(sunUranus);
 
 		// ==================================
 		// 	Setting up Uranus
@@ -226,8 +276,16 @@
 		var uranus = new THREE.Mesh( uranusGeometry, material );
 
 		// add the moon to the earth
-		sun.add(uranus);
+		sunUranus.add(uranus);
 		uranus.translateY(orbitalScaler(1787));
+
+		// ==================================
+		// 	Setting up Sun/Neptune
+		// ==================================
+		var sunNeptuneGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunNeptune = new THREE.Mesh(sunNeptuneGeometry, material);
+		scene.add(sunNeptune);
 
 		// ==================================
 		// 	Setting up Neptune
@@ -240,8 +298,16 @@
 		var neptune = new THREE.Mesh( neptuneGeometry, material );
 
 		// add the moon to the earth
-		sun.add(neptune);
+		sunNeptune.add(neptune);
 		neptune.translateY(orbitalScaler(2795));
+
+		// ==================================
+		// 	Setting up Sun/Pluto
+		// ==================================
+		var sunPlutoGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunPluto = new THREE.Mesh(sunPlutoGeometry, material);
+		scene.add(sunPluto);
 
 		// ==================================
 		// 	Setting up Pluto
@@ -254,12 +320,134 @@
 		var pluto = new THREE.Mesh( plutoGeometry, material );
 
 		// add the moon to the earth
-		sun.add(pluto);
+		sunPluto.add(pluto);
 		pluto.translateY(orbitalScaler(3670));
 
 		// zooms the camera out of the original orientation so we can view the planets
 		camera.position.z = 200;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		var radius = 1;
+
+		var i, r = 371, starsGeometry = [ new THREE.Geometry(), new THREE.Geometry() ];
+				for ( i = 0; i < 250; i ++ ) {
+					var vertex = new THREE.Vector3();
+					vertex.x = Math.random() * 2 - 1;
+					vertex.y = Math.random() * 2 - 1;
+					vertex.z = Math.random() * 2 - 1;
+					vertex.multiplyScalar( r );
+					starsGeometry[ 0 ].vertices.push( vertex );
+				}
+				for ( i = 0; i < 1500; i ++ ) {
+					var vertex = new THREE.Vector3();
+					vertex.x = Math.random() * 2 - 1;
+					vertex.y = Math.random() * 2 - 1;
+					vertex.z = Math.random() * 2 - 1;
+					vertex.multiplyScalar( r );
+					starsGeometry[ 1 ].vertices.push( vertex );
+				}
+
+		var stars;
+				var starsMaterials = [
+					new THREE.PointsMaterial( { color: 0x555555, size: 2, sizeAttenuation: false } ),
+					new THREE.PointsMaterial( { color: 0x555555, size: 1, sizeAttenuation: false } ),
+					new THREE.PointsMaterial( { color: 0x333333, size: 2, sizeAttenuation: false } ),
+					new THREE.PointsMaterial( { color: 0x3a3a3a, size: 1, sizeAttenuation: false } ),
+					new THREE.PointsMaterial( { color: 0x1a1a1a, size: 2, sizeAttenuation: false } ),
+					new THREE.PointsMaterial( { color: 0x1a1a1a, size: 1, sizeAttenuation: false } )
+				];
+				for ( i = 10; i < 30; i ++ ) {
+					stars = new THREE.Points( starsGeometry[ i % 2 ], starsMaterials[ i % 6 ] );
+					stars.rotation.x = Math.random() * 6;
+					stars.rotation.y = Math.random() * 6;
+					stars.rotation.z = Math.random() * 6;
+					s = i * 10;
+					stars.scale.set( s, s, s );
+					stars.matrixAutoUpdate = false;
+					stars.updateMatrix();
+					scene.add( stars );
+		}
+
+// THREE.PointerLockControls = function ( camera ) {
+
+// 	console.log("in poitner lock controls")
+
+// 	var scope = this;
+
+// 	camera.rotation.set( 0, 0, 0 );
+
+// 	var pitchObject = new THREE.Object3D();
+// 	pitchObject.add( camera );
+
+// 	var yawObject = new THREE.Object3D();
+// 	yawObject.position.y = 10;
+// 	yawObject.add( pitchObject );
+
+// 	var PI_2 = Math.PI / 2;
+
+// 	var onMouseMove = function ( event ) {
+
+// 		if ( scope.enabled === false ) return;
+
+// 		var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+// 		var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+// 		yawObject.rotation.y -= movementX * 0.002;
+// 		pitchObject.rotation.x -= movementY * 0.002;
+
+// 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
+
+// 	};
+
+// 	this.dispose = function() {
+
+// 		document.removeEventListener( 'mousemove', onMouseMove, false );
+
+// 	};
+
+// 	document.addEventListener( 'mousemove', onMouseMove, false );
+
+// 	this.enabled = false;
+
+// 	this.getObject = function () {
+
+// 		return yawObject;
+
+// 	};
+
+// 	this.getDirection = function() {
+
+// 		// assumes the camera itself is not rotated
+
+// 		var direction = new THREE.Vector3( 0, 0, - 1 );
+// 		var rotation = new THREE.Euler( 0, 0, 0, "YXZ" );
+
+// 		return function( v ) {
+
+// 			rotation.set( pitchObject.rotation.x, yawObject.rotation.y, 0 );
+
+// 			v.copy( direction ).applyEuler( rotation );
+
+// 			return v;
+
+// 		};
+
+// 	}();
+
+// };
 
 		// render function
 		function render() {
@@ -267,9 +455,18 @@
 			requestAnimationFrame( render );
 			// rotates earth orientation
 			venus.rotation.z += 0.05;
-			sun.rotation.z += Math.PI/1800;
-			sunEarth.rotation.z += Math.PI/(1800*24.47);
-			sunMercury.rotation.z += Math.PI/(1800*)
+			sun.rotation.z += Math.PI/(450*25);
+			// assume rotation is on y axis for now 365.25 days in a year
+			earth.rotation.y += Math.PI/(450/365.25);
+			sunEarth.rotation.z += Math.PI/450;
+			sunMercury.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(88));
+			sunVenus.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(224.7));
+			sunMars.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(686.93));
+			sunJupiter.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(4330.6));
+			sunSaturn.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(10755.7));
+			sunUranus.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(30687));
+			sunNeptune.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(60190));
+			sunPluto.rotation.z += Math.pi/(450*rotationAroundSunRelativeToEarth(90520));
 			// sun.rotation.z += .0016666;
 			// sun.rotation.y += .01;
 			// earth.rotation.x += 0.005;
