@@ -15,8 +15,12 @@
 
 		// Helper Method
 		var orbitalScaler = function(distance) {
-			return distance / 2.8
-		} 
+			return distance / 2.9
+		};
+
+		var radiusLog = function (radius) {
+			return Math.log(radius) / Math.log(10)
+		};
 
 		// set up scenes
 		var scene = new THREE.Scene();
@@ -31,14 +35,14 @@
 		// scene.add( new THREE.Fog(0xffffff, 0.015, 100) )
 
 		// set up camera
-		var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
+		var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 5000 );
 		// set up renderer
 		var renderer = new THREE.WebGLRenderer();
 
 		// setting up camera controls
 		controls = new THREE.OrbitControls( camera );
 				controls.minDistance = 10;
-				controls.maxDistance = 200;
+				controls.maxDistance = 800;
 
 		//3D Axis helper for center of scene
 		scene.add( new THREE.AxisHelper( 20 ) );
@@ -79,7 +83,7 @@
 		// 	Setting up the sun
 		// ==================================
 		//new shape for sun which is a sphere
-		var sunGeometry = new THREE.SphereGeometry( 5.63577, 32, 32 );
+		var sunGeometry = new THREE.SphereGeometry(radiusLog(432288), 32, 32 );
 		// creating sun texture
 		var sunTexture = new THREE.TextureLoader().load("images/sun.jpg")
 		sunTexture.wrapS = THREE.RepeatWrapping;
@@ -92,11 +96,21 @@
 		
 		// adds the sun to the scene
 		scene.add( sun );
+
+		// ==================================
+		// 	Setting up Sun/Mercury
+		// ==================================
+		var sunMercuryGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunMercury = new THREE.Mesh( sunMercuryGeometry, material );
+		
+		// changes the orbital path
+		scene.add( sunMercury );
 		
 		// ==================================
 		// 	Setting up Mercury
 		// ==================================
-		var mercuryGeometry = new THREE.SphereGeometry( 3.1807, 32, 32 );
+		var mercuryGeometry = new THREE.SphereGeometry(radiusLog(1516), 32, 32 );
 		var mercuryTexture = new THREE.TextureLoader().load("images/mercury.jpg")
 		mercuryTexture.wrapS = THREE.RepeatWrapping;
 		mercuryTexture.wrapT = THREE.RepeatWrapping;
@@ -104,13 +118,13 @@
 		var venus = new THREE.Mesh( mercuryGeometry, material );
 		
 		// adds venus to sun. Might have to add to something else to change orbital path
-		sun.add(venus);
+		sunMercury.add(venus);
 		venus.translateY(orbitalScaler(35.96))
 
 		// ==================================
 		// 	Setting up Venus
 		// ==================================
-		var venusGeometry = new THREE.SphereGeometry( 3.57519, 32, 32 );
+		var venusGeometry = new THREE.SphereGeometry(radiusLog(3760), 32, 32 );
 		var venusTexture = new THREE.TextureLoader().load("images/venus.jpg")
 		venusTexture.wrapS = THREE.RepeatWrapping;
 		venusTexture.wrapT = THREE.RepeatWrapping;
@@ -122,9 +136,19 @@
 		venus.translateY(orbitalScaler(67.24))
 
 		// ==================================
+		// 	Setting up Sun/Earth
+		// ==================================
+		var sunEarthGeometry = new THREE.SphereGeometry(1, 32, 32 );
+		var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+		var sunEarth = new THREE.Mesh( sunEarthGeometry, material );
+		
+		// changes the orbital path
+		scene.add( sunEarth );
+
+		// ==================================
 		// 	Setting up Earth
 		// ==================================
-		var earthGeometry = new THREE.SphereGeometry( 3.59759, 32, 32 );
+		var earthGeometry = new THREE.SphereGeometry(radiusLog(3959), 32, 32 );
 		var earthTexture = new THREE.TextureLoader().load("images/earth.jpg")
 		earthTexture.wrapS = THREE.RepeatWrapping;
 		earthTexture.wrapT = THREE.RepeatWrapping;
@@ -132,14 +156,14 @@
 		var earth = new THREE.Mesh( earthGeometry, material );
 		
 		// adds the earth to the scene - might have to add to something else to change orbital path
-		sun.add( earth );
+		sunEarth.add( earth );
 		earth.translateY(orbitalScaler(92.96));
 		earth.add(new THREE.AxisHelper( 10 ))
 
 		// ==================================
 		// 	Setting up Moon
 		// ==================================
-		var moonGeometry = new THREE.SphereGeometry( 3.03302, 32, 32 );
+		var moonGeometry = new THREE.SphereGeometry(radiusLog(1079), 32, 32 );
 		var moonTexture = new THREE.TextureLoader().load("images/moon.jpg")
 		moonTexture.wrapS = THREE.RepeatWrapping;
 		moonTexture.wrapT = THREE.RepeatWrapping;
@@ -148,12 +172,12 @@
 
 		// add the moon to the earth
 		earth.add(moon);
-		moon.translateY(13);
+		moon.translateY(8.5);
 
 		// ==================================
 		// 	Setting up Mars
 		// ==================================
-		var marsGeometry = new THREE.SphereGeometry( 3.32346, 32, 32 );
+		var marsGeometry = new THREE.SphereGeometry(radiusLog(2106), 32, 32 );
 		var marsTexture = new THREE.TextureLoader().load("images/mars.jpg")
 		marsTexture.wrapS = THREE.RepeatWrapping;
 		marsTexture.wrapT = THREE.RepeatWrapping;
@@ -166,7 +190,7 @@
 		// ==================================
 		// 	Setting up Jupiter
 		// ==================================
-		var jupiterGeometry = new THREE.SphereGeometry( 4.6379, 32, 32 );
+		var jupiterGeometry = new THREE.SphereGeometry(radiusLog(43,441), 32, 32 );
 		var jupiterTexture = new THREE.TextureLoader().load("images/jupiter.jpg")
 		jupiterTexture.wrapS = THREE.RepeatWrapping;
 		jupiterTexture.wrapT = THREE.RepeatWrapping;
@@ -178,21 +202,63 @@
 		jupiter.translateY(orbitalScaler(483.8));
 
 		// ==================================
-		// 	Setting up Jupiter
+		// 	Setting up Saturn
 		// ==================================
-		var jupiterGeometry = new THREE.SphereGeometry( 4.6379, 32, 32 );
-		var jupiterTexture = new THREE.TextureLoader().load("images/jupiter.jpg")
-		jupiterTexture.wrapS = THREE.RepeatWrapping;
-		jupiterTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: jupiterTexture});
-		var jupiter = new THREE.Mesh( jupiterGeometry, material );
+		var saturnGeometry = new THREE.SphereGeometry(radiusLog(36,184), 32, 32 );
+		var saturnTexture = new THREE.TextureLoader().load("images/saturn.jpg")
+		saturnTexture.wrapS = THREE.RepeatWrapping;
+		saturnTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: saturnTexture});
+		var saturn = new THREE.Mesh( saturnGeometry, material );
 
 		// add the moon to the earth
-		sun.add(jupiter);
-		jupiter.translateY(orbitalScaler(483.8));
+		sun.add(saturn);
+		saturn.translateY(orbitalScaler(888.2));
 
-		// zooms the camera out of the original orientation so we can view the cube
-		camera.position.z = 100;
+		// ==================================
+		// 	Setting up Uranus
+		// ==================================
+		var uranusGeometry = new THREE.SphereGeometry(radiusLog(15,759), 32, 32 );
+		var uranusTexture = new THREE.TextureLoader().load("images/uranus.jpg")
+		uranusTexture.wrapS = THREE.RepeatWrapping;
+		uranusTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: uranusTexture});
+		var uranus = new THREE.Mesh( uranusGeometry, material );
+
+		// add the moon to the earth
+		sun.add(uranus);
+		uranus.translateY(orbitalScaler(1787));
+
+		// ==================================
+		// 	Setting up Neptune
+		// ==================================
+		var neptuneGeometry = new THREE.SphereGeometry(radiusLog(15,299), 32, 32 );
+		var neptuneTexture = new THREE.TextureLoader().load("images/neptune.jpg")
+		neptuneTexture.wrapS = THREE.RepeatWrapping;
+		neptuneTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: neptuneTexture});
+		var neptune = new THREE.Mesh( neptuneGeometry, material );
+
+		// add the moon to the earth
+		sun.add(neptune);
+		neptune.translateY(orbitalScaler(2795));
+
+		// ==================================
+		// 	Setting up Pluto
+		// ==================================
+		var plutoGeometry = new THREE.SphereGeometry(radiusLog(736.9), 32, 32 );
+		var plutoTexture = new THREE.TextureLoader().load("images/pluto.jpg")
+		plutoTexture.wrapS = THREE.RepeatWrapping;
+		plutoTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: plutoTexture});
+		var pluto = new THREE.Mesh( plutoGeometry, material );
+
+		// add the moon to the earth
+		sun.add(pluto);
+		pluto.translateY(orbitalScaler(3670));
+
+		// zooms the camera out of the original orientation so we can view the planets
+		camera.position.z = 200;
 
 
 		// render function
@@ -201,10 +267,13 @@
 			requestAnimationFrame( render );
 			// rotates earth orientation
 			venus.rotation.z += 0.05;
-			sun.rotation.z += .01;
+			sun.rotation.z += Math.PI/1800;
+			sunEarth.rotation.z += Math.PI/(1800*24.47);
+			sunMercury.rotation.z += Math.PI/(1800*)
+			// sun.rotation.z += .0016666;
 			// sun.rotation.y += .01;
-			earth.rotation.x += 0.005;
-			earth.rotation.y += 0.005;
+			// earth.rotation.x += 0.005;
+			// earth.rotation.y += 0.005;
 			// spacesphere.rotation.y += 0.001;
 			renderer.render( scene, camera );
 		}
