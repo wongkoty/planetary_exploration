@@ -9,25 +9,206 @@
 		</style>
 	</head>
 	<body>
-		<script src="js/three.js"></script>
+		<script src="/js/three.js"></script>
+		<script type="text/javascript" src="/js/orbitalcontrols.js"></script>
 		<script>
+
+		// Helper Method
+		var orbitalScaler = function(distance) {
+			return distance / 2.8
+		} 
+
 		// set up scenes
 		var scene = new THREE.Scene();
+		// scene.add( fog ); 
+		// scene.Fog
+
+		// set up a clock
+		var clock = new THREE.Clock();
+		clock.autoStart
+		console.log(clock)
+
+		// scene.add( new THREE.Fog(0xffffff, 0.015, 100) )
+
 		// set up camera
-		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+		var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
 		// set up renderer
 		var renderer = new THREE.WebGLRenderer();
+
+		// setting up camera controls
+		controls = new THREE.OrbitControls( camera );
+				controls.minDistance = 10;
+				controls.maxDistance = 200;
+
+		//3D Axis helper for center of scene
+		scene.add( new THREE.AxisHelper( 20 ) );
+
+
+		// sets background color
+		// renderer.setClearColor(new THREE.Color(0x990000	));
+
+		//need to wrap in space - need to revisit
+
+		// var spacetex = new THREE.TextureLoader().load("images/space.jpg");
+		// spacetex.minFilter = THREE.LinearFilter;
+		// spacetex.wrapS = THREE.RepeatWrapping;
+		// spacetex.wrapT = THREE.RepeatWrapping;
+
+
+	 //  var spacesphereGeo = new THREE.SphereGeometry( 10, 32, 32);
+	 //  var spacesphereMat = new THREE.MeshBasicMaterial({map: spacetex});
+
+	 //  var spacesphere = new THREE.Mesh(spacesphereGeo,spacesphereMat);
+	  
+	  //spacesphere needs to be double sided as the camera is within the spacesphere
+	  // spacesphere.material.side = THREE.DoubleSide;
+	  
+
+	  // spacesphere.material.map.repeat.set( 3, 3);
+	  
+	  // scene.add(spacesphere);
+		// spacesphere.position.set(5, 10, 2)
+
+		// Render appends to the body 
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
-		//new shape which is a cube
-		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-		// creating a material that will takein the color of 0x00ff00
-		var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-		var cube = new THREE.Mesh( geometry, material );
-		scene.add( cube );
+		// setting up logarithmic scale
 
-		camera.position.z = 5;
+		// ==================================
+		// 	Setting up the sun
+		// ==================================
+		//new shape for sun which is a sphere
+		var sunGeometry = new THREE.SphereGeometry( 5.63577, 32, 32 );
+		// creating sun texture
+		var sunTexture = new THREE.TextureLoader().load("images/sun.jpg")
+		sunTexture.wrapS = THREE.RepeatWrapping;
+		sunTexture.wrapT = THREE.RepeatWrapping;
+		// creating the sun material
+		var material = new THREE.MeshBasicMaterial({map: sunTexture});
+
+		// take the sun shape and wraps sun mesh
+		var sun = new THREE.Mesh( sunGeometry, material );
+		
+		// adds the sun to the scene
+		scene.add( sun );
+		
+		// ==================================
+		// 	Setting up Mercury
+		// ==================================
+		var mercuryGeometry = new THREE.SphereGeometry( 3.1807, 32, 32 );
+		var mercuryTexture = new THREE.TextureLoader().load("images/mercury.jpg")
+		mercuryTexture.wrapS = THREE.RepeatWrapping;
+		mercuryTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: mercuryTexture});
+		var venus = new THREE.Mesh( mercuryGeometry, material );
+		
+		// adds venus to sun. Might have to add to something else to change orbital path
+		sun.add(venus);
+		venus.translateY(orbitalScaler(35.96))
+
+		// ==================================
+		// 	Setting up Venus
+		// ==================================
+		var venusGeometry = new THREE.SphereGeometry( 3.57519, 32, 32 );
+		var venusTexture = new THREE.TextureLoader().load("images/venus.jpg")
+		venusTexture.wrapS = THREE.RepeatWrapping;
+		venusTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: venusTexture});
+		var venus = new THREE.Mesh( venusGeometry, material );
+		
+		// adds venus to sun. Might have to add to something else to change orbital path
+		sun.add(venus);
+		venus.translateY(orbitalScaler(67.24))
+
+		// ==================================
+		// 	Setting up Earth
+		// ==================================
+		var earthGeometry = new THREE.SphereGeometry( 3.59759, 32, 32 );
+		var earthTexture = new THREE.TextureLoader().load("images/earth.jpg")
+		earthTexture.wrapS = THREE.RepeatWrapping;
+		earthTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: earthTexture});
+		var earth = new THREE.Mesh( earthGeometry, material );
+		
+		// adds the earth to the scene - might have to add to something else to change orbital path
+		sun.add( earth );
+		earth.translateY(orbitalScaler(92.96));
+		earth.add(new THREE.AxisHelper( 10 ))
+
+		// ==================================
+		// 	Setting up Moon
+		// ==================================
+		var moonGeometry = new THREE.SphereGeometry( 3.03302, 32, 32 );
+		var moonTexture = new THREE.TextureLoader().load("images/moon.jpg")
+		moonTexture.wrapS = THREE.RepeatWrapping;
+		moonTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: moonTexture});
+		var moon = new THREE.Mesh( moonGeometry, material );
+
+		// add the moon to the earth
+		earth.add(moon);
+		moon.translateY(13);
+
+		// ==================================
+		// 	Setting up Mars
+		// ==================================
+		var marsGeometry = new THREE.SphereGeometry( 3.32346, 32, 32 );
+		var marsTexture = new THREE.TextureLoader().load("images/mars.jpg")
+		marsTexture.wrapS = THREE.RepeatWrapping;
+		marsTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: marsTexture});
+		var mars = new THREE.Mesh( marsGeometry, material );
+
+		sun.add(mars);
+		mars.translateY(orbitalScaler(141.6));
+
+		// ==================================
+		// 	Setting up Jupiter
+		// ==================================
+		var jupiterGeometry = new THREE.SphereGeometry( 4.6379, 32, 32 );
+		var jupiterTexture = new THREE.TextureLoader().load("images/jupiter.jpg")
+		jupiterTexture.wrapS = THREE.RepeatWrapping;
+		jupiterTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: jupiterTexture});
+		var jupiter = new THREE.Mesh( jupiterGeometry, material );
+
+		// add the moon to the earth
+		sun.add(jupiter);
+		jupiter.translateY(orbitalScaler(483.8));
+
+		// ==================================
+		// 	Setting up Jupiter
+		// ==================================
+		var jupiterGeometry = new THREE.SphereGeometry( 4.6379, 32, 32 );
+		var jupiterTexture = new THREE.TextureLoader().load("images/jupiter.jpg")
+		jupiterTexture.wrapS = THREE.RepeatWrapping;
+		jupiterTexture.wrapT = THREE.RepeatWrapping;
+		var material = new THREE.MeshBasicMaterial({map: jupiterTexture});
+		var jupiter = new THREE.Mesh( jupiterGeometry, material );
+
+		// add the moon to the earth
+		sun.add(jupiter);
+		jupiter.translateY(orbitalScaler(483.8));
+
+		// zooms the camera out of the original orientation so we can view the cube
+		camera.position.z = 100;
+
+
+		// render function
+		function render() {
+			// runs a loops that will call the render function 60x a second
+			requestAnimationFrame( render );
+			// rotates earth orientation
+			venus.rotation.z += 0.05;
+			sun.rotation.z += .01;
+			// sun.rotation.y += .01;
+			earth.rotation.x += 0.005;
+			earth.rotation.y += 0.005;
+			// spacesphere.rotation.y += 0.001;
+			renderer.render( scene, camera );
+		}
+		render();
 		</script>
 	</body>
 </html>
