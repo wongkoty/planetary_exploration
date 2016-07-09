@@ -23,8 +23,12 @@
 		};
 
 		var rotationAroundSunRelativeToEarth = function(earthDays) {
-			return earthDays / 365
+			return earthDays / 365.25
 		};
+
+		var rotationAroundAxisRelativeToEarth = function(earthDays) {
+			return earthDays / 365.25
+		}
 
 		// set up scenes
 		var scene = new THREE.Scene();
@@ -119,11 +123,11 @@
 		mercuryTexture.wrapS = THREE.RepeatWrapping;
 		mercuryTexture.wrapT = THREE.RepeatWrapping;
 		var material = new THREE.MeshBasicMaterial({map: mercuryTexture});
-		var venus = new THREE.Mesh( mercuryGeometry, material );
+		var mercury = new THREE.Mesh( mercuryGeometry, material );
 		
 		// adds venus to sun. Might have to add to something else to change orbital path
-		sunMercury.add(venus);
-		venus.translateY(orbitalScaler(35.96))
+		sunMercury.add(mercury);
+		mercury.translateY(orbitalScaler(35.96))
 
 		// ==================================
 		// 	Setting up Sun/Venus
@@ -454,13 +458,21 @@
 			// runs a loops that will call the render function 60x a second
 			requestAnimationFrame( render );
 			// rotates earth orientation
-			venus.rotation.z += 0.05;
+			// venus.rotation.z += 0.05;
 			sun.rotation.z += Math.PI/(450*25);
-			// assume rotation is on y axis for now 365.25 days in a year
+			mercury.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(59));
+			venus.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(243));
 			earth.rotation.y += Math.PI/(450/365.25);
-			sunEarth.rotation.z += Math.PI/450;
+			mars.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(1.0288));
+			jupiter.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(.41666));
+			saturn.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(.44522));
+			uranus.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(.70833));
+			neptune.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(.66666))
+			pluto.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(6.4))
+
 			sunMercury.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(88));
 			sunVenus.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(224.7));
+			sunEarth.rotation.z += Math.PI/450;
 			sunMars.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(686.93));
 			sunJupiter.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(4330.6));
 			sunSaturn.rotation.z += Math.PI/(450*rotationAroundSunRelativeToEarth(10755.7));
