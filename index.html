@@ -3,14 +3,31 @@
 	<head>
 		<meta charset=utf-8>
 		<title>My first Three.js app</title>
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
 		</style>
 	</head>
 	<body>
+		<div id="blocker">
+
+			<div id="instructions">
+				<span style="font-size:40px">Click to play</span>
+				<br />
+				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)</br>
+				<audio controls loop>
+ 				  <source src="audio/interstellar.mp3" type="audio/mpeg">
+ 					Your browser does not support the audio element.
+				</audio>
+			</div>
+
+		</div>
+
+
 		<script src="/js/three.js"></script>
 		<script type="text/javascript" src="/js/orbitalcontrols.js"></script>
+		<script type="text/javascript" src="/js/pointerlockcontrols.js"></script>
 		<script type="application/x-glsl" id="sky-vertex">  
 			varying vec2 vUV;
 
@@ -29,10 +46,13 @@
 			  vec4 sample = texture2D(texture, vUV);
 			  gl_FragColor = vec4(sample.xyz, sample.w);
 			}
-			</script>  
+			</script> 
+
 		<script>
 
-		// Helper Method
+
+
+		// Helper Methods
 		var orbitalScaler = function(distance) {
 			return distance / 2.9
 		};
@@ -51,13 +71,9 @@
 
 		// set up scenes
 		var scene = new THREE.Scene();
-		// scene.add( fog ); 
-		// scene.Fog
 
-		// set up a clock
-		var clock = new THREE.Clock();
-		clock.autoStart
-		console.log(clock)
+
+
 
 		// scene.add( new THREE.Fog(0xffffff, 0.015, 100) )
 
@@ -71,11 +87,15 @@
 				controls.minDistance = 10;
 				controls.maxDistance = 2000;
 
+		// camera.lookAt( new THREE.Vector3( 1, 0, 0 ))
+
 		//3D Axis helper for center of scene
 		scene.add( new THREE.AxisHelper( 20 ) );
-
-
 	
+		// adds lighting from center of universe.
+		var light = new THREE.PointLight( 0xFFFFFF, 3, 185, 2 );
+		light.position.set( 0, 0, 0 );
+		scene.add( light );
 
 		// Render appends to the body 
 		renderer.setSize( window.innerWidth, window.innerHeight );
@@ -87,7 +107,7 @@
 		// Setting up starfield
 		// ==================================
 		// Setting up shape for starfield
-		var geometry = new THREE.SphereGeometry(1000, 60, 40);  
+		var geometry = new THREE.SphereGeometry(2800, 60, 40);  
 		// Creating texture for space
 		var skyTexture = { 
 			texture: {type: 't', value: new THREE.TextureLoader().load("images/nebula.jpg")}
@@ -109,6 +129,12 @@
 		skyBox.renderDepth = 5000.0;  
 		scene.add(skyBox);  
 
+		// skyBox.position.copy(camera.position);
+		// skyBox.rotation.copy(camera.rotation);
+		// skyBox.updateMatrix();
+		// skyBox.translateZ(-10);
+		// camera.lookAt(skyBox);
+		// skyBox.add(camera);
 
 		// ==================================
 		// 	Setting up the sun
@@ -145,7 +171,7 @@
 		var mercuryTexture = new THREE.TextureLoader().load("images/mercury.jpg")
 		mercuryTexture.wrapS = THREE.RepeatWrapping;
 		mercuryTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: mercuryTexture});
+		var material = new THREE.MeshPhongMaterial({map: mercuryTexture});
 		var mercury = new THREE.Mesh( mercuryGeometry, material );
 		
 		// adds venus to sun. Might have to add to something else to change orbital path
@@ -170,7 +196,7 @@
 		var venusTexture = new THREE.TextureLoader().load("images/venus.jpg")
 		venusTexture.wrapS = THREE.RepeatWrapping;
 		venusTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: venusTexture});
+		var material = new THREE.MeshPhongMaterial({map: venusTexture});
 		var venus = new THREE.Mesh( venusGeometry, material );
 		
 		// adds venus to sun. Might have to add to something else to change orbital path
@@ -195,7 +221,7 @@
 		var earthTexture = new THREE.TextureLoader().load("images/earth.jpg")
 		earthTexture.wrapS = THREE.RepeatWrapping;
 		earthTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: earthTexture});
+		var material = new THREE.MeshPhongMaterial({map: earthTexture});
 		var earth = new THREE.Mesh( earthGeometry, material );
 		
 		// adds the earth to the scene - might have to add to something else to change orbital path
@@ -214,7 +240,7 @@
 		var moonTexture = new THREE.TextureLoader().load("images/moon.jpg")
 		moonTexture.wrapS = THREE.RepeatWrapping;
 		moonTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: moonTexture});
+		var material = new THREE.MeshPhongMaterial({map: moonTexture});
 		var moon = new THREE.Mesh( moonGeometry, material );
 
 		// add the moon to the earth
@@ -238,7 +264,7 @@
 		var marsTexture = new THREE.TextureLoader().load("images/mars.jpg")
 		marsTexture.wrapS = THREE.RepeatWrapping;
 		marsTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: marsTexture});
+		var material = new THREE.MeshPhongMaterial({map: marsTexture});
 		var mars = new THREE.Mesh( marsGeometry, material );
 
 		sunMars.add(mars);
@@ -262,7 +288,7 @@
 		var jupiterTexture = new THREE.TextureLoader().load("images/jupiter.jpg")
 		jupiterTexture.wrapS = THREE.RepeatWrapping;
 		jupiterTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: jupiterTexture});
+		var material = new THREE.MeshPhongMaterial({map: jupiterTexture});
 		var jupiter = new THREE.Mesh( jupiterGeometry, material );
 
 		// add the moon to the earth
@@ -285,7 +311,7 @@
 		var saturnTexture = new THREE.TextureLoader().load("images/saturn.jpg")
 		saturnTexture.wrapS = THREE.RepeatWrapping;
 		saturnTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: saturnTexture});
+		var material = new THREE.MeshPhongMaterial({map: saturnTexture});
 		var saturn = new THREE.Mesh( saturnGeometry, material );
 
 		// add the moon to the earth
@@ -308,7 +334,7 @@
 		var uranusTexture = new THREE.TextureLoader().load("images/uranus.jpg")
 		uranusTexture.wrapS = THREE.RepeatWrapping;
 		uranusTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: uranusTexture});
+		var material = new THREE.MeshPhongMaterial({map: uranusTexture});
 		var uranus = new THREE.Mesh( uranusGeometry, material );
 
 		sunUranus.add(uranus);
@@ -330,7 +356,7 @@
 		var neptuneTexture = new THREE.TextureLoader().load("images/neptune.jpg")
 		neptuneTexture.wrapS = THREE.RepeatWrapping;
 		neptuneTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: neptuneTexture});
+		var material = new THREE.MeshPhongMaterial({map: neptuneTexture});
 		var neptune = new THREE.Mesh( neptuneGeometry, material );
 
 		sunNeptune.add(neptune);
@@ -352,7 +378,7 @@
 		var plutoTexture = new THREE.TextureLoader().load("images/pluto.jpg")
 		plutoTexture.wrapS = THREE.RepeatWrapping;
 		plutoTexture.wrapT = THREE.RepeatWrapping;
-		var material = new THREE.MeshBasicMaterial({map: plutoTexture});
+		var material = new THREE.MeshPhongMaterial({map: plutoTexture});
 		var pluto = new THREE.Mesh( plutoGeometry, material );
 
 		// add the moon to the earth
@@ -496,8 +522,8 @@
 			mercury.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(59));
 			venus.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(243));
 			earth.rotation.y += Math.PI/(450/365.25);
-			mars.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(1.0288));
-			jupiter.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(.41666));
+			mars.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(136742.7516));
+			jupiter.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(55030.61953));
 			saturn.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(.44522));
 			uranus.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(.70833));
 			neptune.rotation.y += Math.PI/(450/rotationAroundAxisRelativeToEarth(.66666))
@@ -552,3 +578,45 @@
 	  
 	  // scene.add(spacesphere);
 		// spacesphere.position.set(5, 10, 2) -->
+
+
+<!-- Added manual controls for auto -->
+<!-- 				var audioListener = new THREE.AudioListener();
+		camera.add(audioListener);
+
+		var spaceAudio = new THREE.Audio(audioListener);
+
+		scene.add(spaceAudio);
+
+		var loader = new THREE.AudioLoader();
+
+		// load a resource
+	loader.load(
+		// resource URL
+		'audio/interstellar.mp3',
+		// Function when resource is loaded
+		function ( audioBuffer ) {
+			// set the audio object buffer to the loaded object
+			spaceAudio.setBuffer( audioBuffer );
+
+			// play the audio
+			spaceAudio.play();
+		},
+		// Function called when download progresses
+		function ( xhr ) {
+			console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+		},
+		// Function called when download errors
+		function ( xhr ) {
+			console.log( 'An error happened' );
+		}
+	);
+ -->
+
+<!--  		// scene.add( fog ); 
+		// scene.Fog
+
+		// set up a clock
+		// var clock = new THREE.Clock();
+		// clock.autoStart
+		// console.log(clock) -->
