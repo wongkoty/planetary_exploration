@@ -1,6 +1,13 @@
-#instructions {
-	display: block;
+#blocker {
+	/*display: block;*/
 	position: absolute;
 	text-align: center;
 	color: white;
+	right: 33%;
+}
+h1 {
+	margin-bottom: 0px;
+}
+h3 {
+	margin: 2px;
 }
