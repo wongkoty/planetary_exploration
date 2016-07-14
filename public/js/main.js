@@ -63,95 +63,41 @@
     return 1 / earthDays
   }
 
+  $(".reset").click(function() {
+    console.log('reset');
+    controls.reset();
+  });
 
+  $(".one").click(function() {
+    console.log('one clicked')
+    test(1);
+  });
 
-  var blocker = document.getElementById( 'blocker' );
-  var instructions = document.getElementById( 'instructions' );
-  // http://www.html5rocks.com/en/tutorials/pointerlock/intro/
-  var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
-  if ( havePointerLock ) {
-    var element = document.body;
-    var pointerlockchange = function ( event ) {
-      if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-        controlsEnabled = true;
-        controls.enabled = true;
-        blocker.style.display = 'none';
-      } else {
-        controls.enabled = false;
-        blocker.style.display = '-webkit-box';
-        blocker.style.display = '-moz-box';
-        blocker.style.display = 'box';
-        instructions.style.display = '';
-      }
-    };
-    var pointerlockerror = function ( event ) {
-      instructions.style.display = '';
-    };
-    // Hook pointer lock state change events
-    document.addEventListener( 'pointerlockchange', pointerlockchange, false );
-    document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
-    document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
-    document.addEventListener( 'pointerlockerror', pointerlockerror, false );
-    document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
-    document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
-    instructions.addEventListener( 'click', function ( event ) {
-      instructions.style.display = 'none';
-      // Ask the browser to lock the pointer
-      element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-      if ( /Firefox/i.test( navigator.userAgent ) ) {
-        var fullscreenchange = function ( event ) {
-          if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
-            document.removeEventListener( 'fullscreenchange', fullscreenchange );
-            document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
-            element.requestPointerLock();
-          }
-        };
-        document.addEventListener( 'fullscreenchange', fullscreenchange, false );
-        document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
-        element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
-        element.requestFullscreen();
-      } else {
-        element.requestPointerLock();
-      }
-    }, false );
-  } else {
-    instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
-  }
+  $(".two").click(function() {
+    console.log('two clicked')
+    test(2);
+  });
 
-  var controlsEnabled = false;
-  var moveForward = false;
-  var moveBackward = false;
-  var moveLeft = false;
-  var moveRight = false;
-  var canJump = false;
-  var prevTime = performance.now();
-  var velocity = new THREE.Vector3();
+  $(".four").click(function() {
+    console.log('four clicked')
+    test(4);
+  });
 
+  $(".eight").click(function() {
+    console.log('eight clicked')
+    test(8);
+  });
 
-    var onKeyDown = function ( event ) {
-      switch ( event.keyCode ) {
-        case 38: // up
-        case 87: // w
-          moveForward = true;
-          console.log('forward')
-          break;
-        case 37: // left
-        case 65: // a
-          moveLeft = true; break;
-          console.log('left')
-        case 40: // down
-        case 83: // s
-          moveBackward = true;
-          console.log('bw')
-          break;
-        case 39: // right
-        case 68: // d
-          moveRight = true;
-          console.log('right')
-          break;
-      }
-    };
+  var wee = 1;
+  var test = function(num) {
+    // console.log('test');
 
+    if (num != null) {
+      wee = num;
+    }
+    // console.log(wee);
+    return wee
+  };
 
   // set up scenes
   var scene = new THREE.Scene();
@@ -171,16 +117,18 @@
 
   // setting up camera controls
   controls = new THREE.OrbitControls( camera );
-      controls.minDistance = 10;
-      controls.maxDistance = 3700;
+  controls.minDistance = 10;
+  controls.maxDistance = 2500;
+  // controls.maxAzimuthAngle = 1000;
+  // controls.maxZoom = 1000
 
-  camera.lookAt(new THREE.Vector3(1, 0, 0))
+  // camera.lookAt(new THREE.Vector3(1, 0, 0))
 
   //3D Axis helper for center of scene
   scene.add(new THREE.AxisHelper(20));
 
   // adds lighting from center of universe.
-  var light = new THREE.PointLight( 0xFFFFFF, 10, 800, 2 );
+  var light = new THREE.PointLight( 0xFFFFFF, 2, 2500, 2 );
   light.position.set( 0, 0, 0 );
   scene.add( light );
 
@@ -622,7 +570,7 @@
     sun.rotation.z += Math.PI/(450/sunObj.axisRotation);
     mercury.rotation.z += (Math.PI/450)*(earthObj.axisRotation/mercuryObj.axisRotation);
     venus.rotation.z += (Math.PI/450)*(earthObj.axisRotation/venusObj.axisRotation);
-    earth.rotation.z += (Math.PI/450)*(earthObj.axisRotation);
+    earth.rotation.z += (Math.PI/450)*(earthObj.axisRotation)*test();
     mars.rotation.z += (Math.PI/450)*(earthObj.axisRotation/marsObj.axisRotation);
     jupiter.rotation.z += (Math.PI/450)*(earthObj.axisRotation/jupiterObj.axisRotation);
     saturn.rotation.z += (Math.PI/450)*(earthObj.axisRotation/saturnObj.axisRotation);
@@ -632,13 +580,14 @@
 
     sunMercury.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(88);
     sunVenus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(224.7);
-    sunEarth.rotation.y += (Math.PI/450);
+    sunEarth.rotation.y += (Math.PI/450)*test();
     sunMars.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(686.93);
     sunJupiter.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(4330.6);
     sunSaturn.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(10755.7);
     sunUranus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(30687);
     sunNeptune.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(60190);
     sunPluto.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(90520);
+    controls.update()
     // sun.rotation.z += .0016666;
     // sun.rotation.y += .01;
     // earth.rotation.x += 0.005;
