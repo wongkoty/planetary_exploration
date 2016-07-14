@@ -1,20 +1,157 @@
+  // ================
   // Helper Methods
-  // distance from sun using log scale
+  // ================
+  
+  var sunObj = {
+    name: "Sun",
+    axisRotation: 24.47
+  }
+  var mercuryObj = {
+    name: "Mercury",
+    axisRotation: 59
+  }
+  var venusObj = {
+    name: "Venus",
+    axisRotation: 243
+  }
+  var earthObj = {
+    name: "Earth",
+    axisRotation: 365.25
+  };
+  var marsObj = {
+    name: "Mars",
+    axisRotation: 1.03009
+  };
+  var jupiterObj = {
+    name: "Jupiter",
+    axisRotation: .33676
+  }
+  var saturnObj = {
+    name: "Saturn",
+    axisRotation: .44499
+  }
+  var uranusObj = {
+    name: "Uranus",
+    axisRotation: .72006
+  }
+  var neptuneObj = {
+    name: "Neptune",
+    axisRotation: .79805
+  }
+  var plutoObj = {
+    name: "Pluto",
+    axisRotation: 6.37605
+  }
+
+  console.log(sunObj.axisRotation)
+
+
   var orbitalScaler = function(distance) {
-    return distance / 2.9
+    return distance / Math.log(50)
   };
 
+  // size of planets using log scale
   var radiusLog = function (radius) {
     return Math.log(radius) / Math.log(10)
   };
 
   var rotationAroundSunRelativeToEarth = function(earthDays) {
-    return earthDays / 365.25
+    return 365.25 / earthDays
   };
 
   var rotationAroundAxisRelativeToEarth = function(earthDays) {
-    return earthDays / 365.25
+    return 1 / earthDays
   }
+
+
+
+  var blocker = document.getElementById( 'blocker' );
+  var instructions = document.getElementById( 'instructions' );
+  // http://www.html5rocks.com/en/tutorials/pointerlock/intro/
+  var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+  if ( havePointerLock ) {
+    var element = document.body;
+    var pointerlockchange = function ( event ) {
+      if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+        controlsEnabled = true;
+        controls.enabled = true;
+        blocker.style.display = 'none';
+      } else {
+        controls.enabled = false;
+        blocker.style.display = '-webkit-box';
+        blocker.style.display = '-moz-box';
+        blocker.style.display = 'box';
+        instructions.style.display = '';
+      }
+    };
+    var pointerlockerror = function ( event ) {
+      instructions.style.display = '';
+    };
+    // Hook pointer lock state change events
+    document.addEventListener( 'pointerlockchange', pointerlockchange, false );
+    document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
+    document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+    document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+    document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+    document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+    instructions.addEventListener( 'click', function ( event ) {
+      instructions.style.display = 'none';
+      // Ask the browser to lock the pointer
+      element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+      if ( /Firefox/i.test( navigator.userAgent ) ) {
+        var fullscreenchange = function ( event ) {
+          if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+            document.removeEventListener( 'fullscreenchange', fullscreenchange );
+            document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+            element.requestPointerLock();
+          }
+        };
+        document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+        document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+        element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+        element.requestFullscreen();
+      } else {
+        element.requestPointerLock();
+      }
+    }, false );
+  } else {
+    instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+  }
+
+  var controlsEnabled = false;
+  var moveForward = false;
+  var moveBackward = false;
+  var moveLeft = false;
+  var moveRight = false;
+  var canJump = false;
+  var prevTime = performance.now();
+  var velocity = new THREE.Vector3();
+
+
+    var onKeyDown = function ( event ) {
+      switch ( event.keyCode ) {
+        case 38: // up
+        case 87: // w
+          moveForward = true;
+          console.log('forward')
+          break;
+        case 37: // left
+        case 65: // a
+          moveLeft = true; break;
+          console.log('left')
+        case 40: // down
+        case 83: // s
+          moveBackward = true;
+          console.log('bw')
+          break;
+        case 39: // right
+        case 68: // d
+          moveRight = true;
+          console.log('right')
+          break;
+      }
+    };
+
 
   // set up scenes
   var scene = new THREE.Scene();
@@ -27,23 +164,23 @@
   // scene.add( new THREE.Fog(0xffffff, 0.015, 100) )
 
   // set up camera
-  var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 5000 );
+  var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 8000 );
   // set up renderer
-  var renderer = new THREE.WebGLRenderer();
+  var renderer = new THREE.WebGLRenderer({ antialias: true});
   // { antialias: true}
 
   // setting up camera controls
   controls = new THREE.OrbitControls( camera );
       controls.minDistance = 10;
-      controls.maxDistance = 2000;
+      controls.maxDistance = 3700;
 
-  camera.lookAt( new THREE.Vector3( 1, 0, 0 ))
+  camera.lookAt(new THREE.Vector3(1, 0, 0))
 
   //3D Axis helper for center of scene
-  scene.add( new THREE.AxisHelper( 20 ) );
+  scene.add(new THREE.AxisHelper(20));
 
   // adds lighting from center of universe.
-  var light = new THREE.PointLight( 0xFFFFFF, 1.5, 500, 2 );
+  var light = new THREE.PointLight( 0xFFFFFF, 10, 800, 2 );
   light.position.set( 0, 0, 0 );
   scene.add( light );
 
@@ -60,32 +197,6 @@
 
   // var d = a.distanceTo(b);
   // console.log(d)
-  var curve = new THREE.EllipseCurve(
-    0, 0,             // ax, aY
-    13, 13,            // xRadius, yRadius
-    0, 2 * Math.PI, // aStartAngle, aEndAngle
-    false             // aClockwise
-  );
- 
-  var path = new THREE.Path(curve.getPoints(50));
-  var geometry = path.createPointsGeometry(50);
-  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-  var arc = new THREE.Line(geometry, material);
-  this.scene.add(arc);
-  arc.rotation.set(-30, 0, 0);
-
-  var curve = new THREE.EllipseCurve(
-    0, 0,             // ax, aY
-    19, 19,            // xRadius, yRadius
-    0, 2 * Math.PI, // aStartAngle, aEndAngle
-    false             // aClockwise
-  );
-  var path = new THREE.Path(curve.getPoints(50));
-  var geometry = path.createPointsGeometry(50);
-  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-  var arc = new THREE.Line(geometry, material);
-  this.scene.add(arc);
-  arc.rotation.set(-30, 0, 0);
 
   // ==================================
   // Setting up starfield
@@ -137,6 +248,7 @@
   
   // adds the sun to the scene
   scene.add( sun );
+  sun.rotation.set(-30, 0, 0);
 
   // ==================================
   //  Setting up Sun/Mercury
@@ -161,7 +273,23 @@
   // adds venus to sun. Might have to add to something else to change orbital path
   sunMercury.add(mercury);
   mercury.translateZ(orbitalScaler(35.96))
-  mercury.rotation.set(-30, 0, - Math.PI * 2.11 / 180 );
+  mercury.rotation.set(30, 0, - Math.PI * 2.11 / 180 );
+  mercury.add(new THREE.AxisHelper( 10 ))
+
+  // pathing for mercury
+  var curve = new THREE.EllipseCurve(
+    0, 0,             // ax, aY
+    orbitalScaler(35.96), orbitalScaler(35.96),            // xRadius, yRadius
+    0, 2 * Math.PI, // aStartAngle, aEndAngle
+    false             // aClockwise
+  );
+ 
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // ==================================
   //  Setting up Sun/Venus
@@ -186,7 +314,21 @@
   // adds venus to sun. Might have to add to something else to change orbital path
   sunVenus.add(venus);
   venus.translateZ(orbitalScaler(67.24))
-  venus.rotation.set(-30, 0, - Math.PI * 177.4 / 180 );
+  venus.rotation.set(30, 0, - Math.PI * 177.4 / 180 );
+  venus.add(new THREE.AxisHelper( 10 ));
+
+  var curve = new THREE.EllipseCurve(
+    0, 0,
+    orbitalScaler(67.24), orbitalScaler(67.24),
+    0, 2 * Math.PI,
+    false 
+  );
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // ==================================
   //  Setting up Sun/Earth
@@ -216,6 +358,19 @@
   earth.rotation.set(30, 0, - Math.PI * 23.4 / 180 );
   // earth.translateZ(23)
   earth.add(new THREE.AxisHelper( 10 ))
+
+  var curve = new THREE.EllipseCurve(
+    0, 0,
+    orbitalScaler(92.96), orbitalScaler(92.96),
+    0, 2 * Math.PI,
+    false 
+  );
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // ==================================
   //  Setting up Moon
@@ -253,7 +408,21 @@
 
   sunMars.add(mars);
   mars.translateZ(orbitalScaler(141.6));
-  mars.rotation.set(-30, 0, - Math.PI * 25 / 180 );
+  mars.rotation.set(30, 0, - Math.PI * 25 / 180 );
+
+  var curve = new THREE.EllipseCurve(
+    0, 0,
+    orbitalScaler(141.6), orbitalScaler(141.6),
+    0, 2 * Math.PI,
+    false 
+  );
+
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // ==================================
   //  Setting up Sun/Jupiter
@@ -275,10 +444,23 @@
   var material = new THREE.MeshPhongMaterial({map: jupiterTexture});
   var jupiter = new THREE.Mesh( jupiterGeometry, material );
 
-  // add the moon to the earth
   sunJupiter.add(jupiter);
   jupiter.translateZ(orbitalScaler(483.8));
-  jupiter.rotation.set(-30, 0, - Math.PI * 3.13 / 180 );
+  jupiter.rotation.set(30, 0, - Math.PI * 3.13 / 180);
+
+  var curve = new THREE.EllipseCurve(
+    0, 0,
+    orbitalScaler(483.8), orbitalScaler(483.8),
+    0, 2 * Math.PI,
+    false 
+  );
+  
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // ==================================
   //  Setting up Sun/Saturn
@@ -301,7 +483,21 @@
   // add the moon to the earth
   sunSaturn.add(saturn);
   saturn.translateZ(orbitalScaler(888.2));
-  saturn.rotation.set(-30, 0, - Math.PI * 26.7 / 180 );
+  saturn.rotation.set(30, 0, - Math.PI * 26.7 / 180);
+
+  var curve = new THREE.EllipseCurve(
+    0, 0,
+    orbitalScaler(888.2), orbitalScaler(888.2),
+    0, 2 * Math.PI,
+    false 
+  );
+  
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // ==================================
   //  Setting up Sun/Uranus
@@ -323,7 +519,21 @@
 
   sunUranus.add(uranus);
   uranus.translateZ(orbitalScaler(1787));
-  uranus.rotation.set(-30, 0, - Math.PI * 97.77 / 180 );
+  uranus.rotation.set(30, 0, - Math.PI * 97.77 / 180 );
+
+  var curve = new THREE.EllipseCurve(
+    0, 0,
+    orbitalScaler(1787), orbitalScaler(1787),
+    0, 2 * Math.PI,
+    false 
+  );
+  
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // ==================================
   //  Setting up Sun/Neptune
@@ -345,7 +555,21 @@
 
   sunNeptune.add(neptune);
   neptune.translateZ(orbitalScaler(2795));
-  neptune.rotation.set(-30, 0, - Math.PI * 28.32/ 180 );
+  neptune.rotation.set(30, 0, - Math.PI * 28.32/ 180 );
+
+  var curve = new THREE.EllipseCurve(
+    0, 0,
+    orbitalScaler(2795), orbitalScaler(2795),
+    0, 2 * Math.PI,
+    false 
+  );
+  
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // ==================================
   //  Setting up Sun/Pluto
@@ -368,7 +592,21 @@
   // add the moon to the earth
   sunPluto.add(pluto);
   pluto.translateZ(orbitalScaler(3670));
-  venus.rotation.set(-30, 0, - Math.PI * 119.61 / 180 );
+  pluto.rotation.set(30, 0, - Math.PI * 119.61 / 180 );
+
+  var curve = new THREE.EllipseCurve(
+    0, 0,
+    orbitalScaler(3670), orbitalScaler(3670),
+    0, 2 * Math.PI,
+    false 
+  );
+  
+  var path = new THREE.Path(curve.getPoints(50));
+  var geometry = path.createPointsGeometry(50);
+  var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+  var arc = new THREE.Line(geometry, material);
+  this.scene.add(arc);
+  arc.rotation.set(11, 0, 0);
 
   // zooms the camera out of the original orientation so we can view the planets
   camera.position.z = 200;
@@ -381,26 +619,26 @@
     requestAnimationFrame( render );
     // rotates earth orientation
     // venus.rotation.z += 0.05;
-    sun.rotation.x += Math.PI/(450*25);
-    mercury.rotation.z += Math.PI/(450/rotationAroundAxisRelativeToEarth(59));
-    venus.rotation.z += Math.PI/(450/rotationAroundAxisRelativeToEarth(243));
-    earth.rotation.z += Math.PI/(450/365.25);
-    mars.rotation.z += Math.PI/(450/rotationAroundAxisRelativeToEarth(136742.7516));
-    jupiter.rotation.z += Math.PI/(450/rotationAroundAxisRelativeToEarth(55030.61953));
-    saturn.rotation.z += Math.PI/(450/rotationAroundAxisRelativeToEarth(.44522));
-    uranus.rotation.z += Math.PI/(450/rotationAroundAxisRelativeToEarth(.70833));
-    neptune.rotation.z += Math.PI/(450/rotationAroundAxisRelativeToEarth(.66666))
-    pluto.rotation.z += Math.PI/(450/rotationAroundAxisRelativeToEarth(6.4))
+    sun.rotation.z += Math.PI/(450/sunObj.axisRotation);
+    mercury.rotation.z += (Math.PI/450)*(earthObj.axisRotation/mercuryObj.axisRotation);
+    venus.rotation.z += (Math.PI/450)*(earthObj.axisRotation/venusObj.axisRotation);
+    earth.rotation.z += (Math.PI/450)*(earthObj.axisRotation);
+    mars.rotation.z += (Math.PI/450)*(earthObj.axisRotation/marsObj.axisRotation);
+    jupiter.rotation.z += (Math.PI/450)*(earthObj.axisRotation/jupiterObj.axisRotation);
+    saturn.rotation.z += (Math.PI/450)*(earthObj.axisRotation/saturnObj.axisRotation);
+    uranus.rotation.z += (Math.PI/450)*(earthObj.axisRotation/uranusObj.axisRotation);
+    neptune.rotation.z += (Math.PI/450)*(earthObj.axisRotation/neptuneObj.axisRotation);
+    pluto.rotation.z += (Math.PI/450)*(earthObj.axisRotation/plutoObj.axisRotation);
 
-    sunMercury.rotation.y += Math.PI/(450*rotationAroundSunRelativeToEarth(88));
-    sunVenus.rotation.y += Math.PI/(450*rotationAroundSunRelativeToEarth(224.7));
-    sunEarth.rotation.y += Math.PI/450;
-    sunMars.rotation.y += Math.PI/(450*rotationAroundSunRelativeToEarth(686.93));
-    sunJupiter.rotation.y += Math.PI/(450*rotationAroundSunRelativeToEarth(4330.6));
-    sunSaturn.rotation.y += Math.PI/(450*rotationAroundSunRelativeToEarth(10755.7));
-    sunUranus.rotation.y += Math.PI/(450*rotationAroundSunRelativeToEarth(30687));
-    sunNeptune.rotation.y += Math.PI/(450*rotationAroundSunRelativeToEarth(60190));
-    sunPluto.rotation.y += Math.pi/(450*rotationAroundSunRelativeToEarth(90520));
+    sunMercury.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(88);
+    sunVenus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(224.7);
+    sunEarth.rotation.y += (Math.PI/450);
+    sunMars.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(686.93);
+    sunJupiter.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(4330.6);
+    sunSaturn.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(10755.7);
+    sunUranus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(30687);
+    sunNeptune.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(60190);
+    sunPluto.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(90520);
     // sun.rotation.z += .0016666;
     // sun.rotation.y += .01;
     // earth.rotation.x += 0.005;
@@ -409,7 +647,6 @@
     renderer.render( scene, camera );
   }
   render();
-
 
 // <!-- garbage code -->
 
