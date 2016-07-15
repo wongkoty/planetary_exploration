@@ -216,7 +216,7 @@
   // scene.add( new THREE.Fog(0xffffff, 0.015, 100) )
 
   // set up camera
-  var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 8000 );
+  var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 10000 );
   // set up renderer
   var renderer = new THREE.WebGLRenderer({ antialias: true});
   // { antialias: true}
@@ -224,7 +224,7 @@
   // setting up camera controls
   controls = new THREE.OrbitControls( camera );
   controls.minDistance = 7;
-  controls.maxDistance = 2500;
+  controls.maxDistance = 2200;
   // controls.maxAzimuthAngle = 1000;
   // controls.maxZoom = 1000
 
