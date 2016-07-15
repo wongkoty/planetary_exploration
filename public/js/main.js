@@ -8,42 +8,51 @@
   }
   var mercuryObj = {
     name: "Mercury",
-    axisRotation: 59
+    axisRotation: 59,
+    rotationAroundSun: 88
   }
   var venusObj = {
     name: "Venus",
-    axisRotation: 243
+    axisRotation: 243,
+    rotationAroundSun: 224.7
   }
   var earthObj = {
     name: "Earth",
-    axisRotation: 365.25
+    axisRotation: 365.25,
+    rotationAroundSun: 365.25
   };
   var marsObj = {
     name: "Mars",
-    axisRotation: 1.03009
+    axisRotation: 1.03009,
+    rotationAroundSun: 686.93
   };
   var jupiterObj = {
     name: "Jupiter",
-    axisRotation: .33676
+    axisRotation: .33676,
+    rotationAroundSun: 4330.6
   }
   var saturnObj = {
     name: "Saturn",
-    axisRotation: .44499
+    axisRotation: .44499,
+    rotationAroundSun: 10755.7
   }
   var uranusObj = {
     name: "Uranus",
-    axisRotation: .72006
+    axisRotation: .72006,
+    rotationAroundSun: 30687
   }
   var neptuneObj = {
     name: "Neptune",
-    axisRotation: .79805
+    axisRotation: .79805,
+    rotationAroundSun: 60190
   }
   var plutoObj = {
     name: "Pluto",
-    axisRotation: 6.37605
+    axisRotation: 6.37605,
+    rotationAroundSun: 90520
   }
 
-  console.log(sunObj.axisRotation)
+  // console.log(sunObj.axisRotation)
 
 
   var orbitalScaler = function(distance) {
@@ -63,41 +72,94 @@
     return 1 / earthDays
   }
 
+  var initialSpeed = 1;
+  var speed = function(num) {
+    // console.log('test');
+
+    if (num != null) {
+      initialSpeed = num;
+    }
+    // console.log(wee);
+    return initialSpeed
+  };
+
+  // click handlers
   $(".reset").click(function() {
-    console.log('reset');
+    // console.log('reset');
     controls.reset();
   });
 
   $(".one").click(function() {
-    console.log('one clicked')
-    test(1);
+    // console.log('one clicked')
+    speed(1);
   });
 
   $(".two").click(function() {
-    console.log('two clicked')
-    test(2);
+    // console.log('two clicked')
+    speed(2);
   });
 
   $(".four").click(function() {
-    console.log('four clicked')
-    test(4);
+    // console.log('four clicked')
+    speed(4);
   });
 
   $(".eight").click(function() {
-    console.log('eight clicked')
-    test(8);
+    // console.log('eight clicked')
+    speed(8);
   });
 
-  var wee = 1;
-  var test = function(num) {
-    // console.log('test');
+  $(".sun").click(function() {
+    console.log('sun');
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + sunObj.name + "</p>");
+  });
 
-    if (num != null) {
-      wee = num;
-    }
-    // console.log(wee);
-    return wee
-  };
+  $(".mercury").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + mercuryObj.name + "</p>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + mercuryObj.rotationAroundSun + "</p>");
+  });
+
+  $(".venus").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + venusObj.name + "</p>");
+  });
+
+  $(".earth").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + earthObj.name + "</p>");
+  });
+
+  $(".mars").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + marsObj.name + "</p>");
+  });
+
+  $(".jupiter").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + jupiterObj.name + "</p>");
+  });
+
+  $(".saturn").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + saturnObj.name + "</p>");
+  });
+
+  $(".uranus").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + uranusObj.name + "</p>");
+  });
+
+  $(".neptune").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + neptuneObj.name + "</p>");
+  });
+
+  $(".pluto").click(function() {
+    $(".planet-info").empty()
+    $(".planet-info").append("<p>" + plutoObj.name + "</p>");
+  });
 
   // set up scenes
   var scene = new THREE.Scene();
@@ -117,7 +179,7 @@
 
   // setting up camera controls
   controls = new THREE.OrbitControls( camera );
-  controls.minDistance = 10;
+  controls.minDistance = 7;
   controls.maxDistance = 2500;
   // controls.maxAzimuthAngle = 1000;
   // controls.maxZoom = 1000
@@ -128,7 +190,7 @@
   scene.add(new THREE.AxisHelper(20));
 
   // adds lighting from center of universe.
-  var light = new THREE.PointLight( 0xFFFFFF, 2, 2500, 2 );
+  var light = new THREE.PointLight( 0xFFFFFF, 1.5, 2500, 2 );
   light.position.set( 0, 0, 0 );
   scene.add( light );
 
@@ -237,6 +299,7 @@
   var material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
   var arc = new THREE.Line(geometry, material);
   scene.add(arc);
+  // not sure why it's 11, but I'm rolling with it
   arc.rotation.set(11, 0, 0);
 
   // ==================================
@@ -559,40 +622,34 @@
   // zooms the camera out of the original orientation so we can view the planets
   camera.position.z = 200;
 
-
-
   // render function
   function render() {
     // runs a loops that will call the render function 60x a second
     requestAnimationFrame( render );
     // rotates earth orientation
     // venus.rotation.z += 0.05;
-    sun.rotation.z += Math.PI/(450/sunObj.axisRotation);
-    mercury.rotation.z += (Math.PI/450)*(earthObj.axisRotation/mercuryObj.axisRotation);
-    venus.rotation.z += (Math.PI/450)*(earthObj.axisRotation/venusObj.axisRotation);
-    earth.rotation.z += (Math.PI/450)*(earthObj.axisRotation)*test();
-    mars.rotation.z += (Math.PI/450)*(earthObj.axisRotation/marsObj.axisRotation);
-    jupiter.rotation.z += (Math.PI/450)*(earthObj.axisRotation/jupiterObj.axisRotation);
-    saturn.rotation.z += (Math.PI/450)*(earthObj.axisRotation/saturnObj.axisRotation);
-    uranus.rotation.z += (Math.PI/450)*(earthObj.axisRotation/uranusObj.axisRotation);
-    neptune.rotation.z += (Math.PI/450)*(earthObj.axisRotation/neptuneObj.axisRotation);
-    pluto.rotation.z += (Math.PI/450)*(earthObj.axisRotation/plutoObj.axisRotation);
+    sun.rotation.z -= Math.PI/(450/sunObj.axisRotation);
+    mercury.rotation.z += (Math.PI/450)*(earthObj.axisRotation/mercuryObj.axisRotation)*speed();
+    venus.rotation.z -= (Math.PI/450)*(earthObj.axisRotation/venusObj.axisRotation)*speed();
+    earth.rotation.z += (Math.PI/450)*(earthObj.axisRotation)*speed();
+    mars.rotation.z += (Math.PI/450)*(earthObj.axisRotation/marsObj.axisRotation)*speed();
+    jupiter.rotation.z += (Math.PI/450)*(earthObj.axisRotation/jupiterObj.axisRotation)*speed();
+    saturn.rotation.z += (Math.PI/450)*(earthObj.axisRotation/saturnObj.axisRotation)*speed();
+    uranus.rotation.z -= (Math.PI/450)*(earthObj.axisRotation/uranusObj.axisRotation)*speed();
+    neptune.rotation.z += (Math.PI/450)*(earthObj.axisRotation/neptuneObj.axisRotation)*speed();
+    pluto.rotation.z += (Math.PI/450)*(earthObj.axisRotation/plutoObj.axisRotation)*speed();
 
-    sunMercury.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(88);
-    sunVenus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(224.7);
-    sunEarth.rotation.y += (Math.PI/450)*test();
-    sunMars.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(686.93);
-    sunJupiter.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(4330.6);
-    sunSaturn.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(10755.7);
-    sunUranus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(30687);
-    sunNeptune.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(60190);
-    sunPluto.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(90520);
+    sunMercury.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(mercuryObj.rotationAroundSun)*speed();
+    sunVenus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(venusObj.rotationAroundSun)*speed();
+    sunEarth.rotation.y += (Math.PI/450)*speed();
+    sunMars.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(marsObj.rotationAroundSun)*speed();
+    sunJupiter.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(jupiterObj.rotationAroundSun)*speed();
+    sunSaturn.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(saturnObj.rotationAroundSun)*speed();
+    sunUranus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(uranusObj.rotationAroundSun)*speed();
+    sunNeptune.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(neptuneObj.rotationAroundSun)*speed();
+    sunPluto.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(plutoObj.rotationAroundSun)*speed();
     controls.update()
-    // sun.rotation.z += .0016666;
-    // sun.rotation.y += .01;
-    // earth.rotation.x += 0.005;
-    // earth.rotation.y += 0.005;
-    // spacesphere.rotation.y += 0.001;
+
     renderer.render( scene, camera );
   }
   render();
@@ -707,3 +764,9 @@
 //         //          stars.updateMatrix();
 //         //          scene.add( stars );
 //         // } -->
+
+    // sun.rotation.z += .0016666;
+    // sun.rotation.y += .01;
+    // earth.rotation.x += 0.005;
+    // earth.rotation.y += 0.005;
+    // spacesphere.rotation.y += 0.001;

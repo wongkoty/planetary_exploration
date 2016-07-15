@@ -14,7 +14,7 @@
 //    Pan - right mouse, or arrow keys / touch: three finter swipe
 
 THREE.OrbitControls = function ( object, domElement ) {
-
+  
   this.object = object;
 
   this.domElement = ( domElement !== undefined ) ? domElement : document;
@@ -24,6 +24,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
   // "target" sets the location of focus, where the object orbits around
   this.target = new THREE.Vector3();
+  // this.target.position0 = new THREE.Vector3(100, 100, 100);
 
   // How far you can dolly in and out ( PerspectiveCamera only )
   this.minDistance = 0;
@@ -59,7 +60,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
   // Set to false to disable panning
   this.enablePan = true;
-  this.keyPanSpeed = 23.0; // pixels moved per arrow key push
+  this.keyPanSpeed = 30.0; // pixels moved per arrow key push
 
   // Set to true to automatically rotate around the target
   // If auto-rotate is enabled, you must call controls.update() in your animation loop
@@ -97,7 +98,7 @@ THREE.OrbitControls = function ( object, domElement ) {
   };
 
   this.reset = function () {
-
+    console.log("in here")
     scope.target.copy( scope.target0 );
     scope.object.position.copy( scope.position0 );
     scope.object.zoom = scope.zoom0;

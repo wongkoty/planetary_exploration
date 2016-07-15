@@ -10,24 +10,47 @@
 		</style>
 	</head>
 	<body>
-		<div id="blocker">
-		<h1 class="cinzel">Space</h1><h1 class="cinzel-black">Exploration</h1>
-			<div id="instructions">
-				<h3>Click to play</h3>
-				(W, A, S, D = Move, MOUSE = Look around)</br>
-				<audio controls loop>
- 				  <source src="audio/interstellar.mp3" type="audio/mpeg">
- 					Your browser does not support the audio element.
-				</audio>
-			</div>
-			<h1 class="reset">reset</h1>
-			<button class="two">2X</button>
-			<button class="four">4X</button>
-			<button class="eight">8X</button>
+	<div id="container">
+
+			<h1 class="cinzel">Space</h1><h1 class="cinzel-black">Exploration</h1>
+				<div id="instructions">
+					(W, A, S, D = Move, Scroll = Pan, Right click = Drag)</br>
+					<audio controls loop>
+	 				  <source src="audio/interstellar.mp3" type="audio/mpeg">
+	 					Your browser does not support the audio element.
+					</audio>
+				</div>
+				<div class="user-speeds">
+					<button class="one"><a>1X</a></button>
+					<button class="two"><a>2X</a></button>
+					<button class="four"><a>4X</a></button>
+					<button class="eight"><a>8X</a></button>
+					<h3 class="reset">Reset</h3>
+				</div>
+				
+
+		
+
+				<div class="planet-info"></div>
 		</div>
+				<div class="planets">
+					<button class="sun">Sun</button>
+					<button class="mercury">Mercury</button>
+					<button class="venus">Venus</button>
+					<button class="earth">Earth</button>
+					<button class="mars">Mars</button>
+					<button class="jupiter">Jupiter</button>
+					<button class="saturn">Saturn</button>
+					<button class="uranus">Uranus</button>
+					<button class="neptune">Neptune</button>
+					<button class="pluto">Pluto</button>
+				</div>
+
 		<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
-		<script src="/js/three.js"></script>
+		<script type="text/javascript" src="/js/three.js"></script>
 		<script type="text/javascript" src="/js/orbitalcontrols.js"></script>
+		<script>
+		</script>
 		<script type="application/x-glsl" id="sky-vertex">  
 			varying vec2 vUV;
 
