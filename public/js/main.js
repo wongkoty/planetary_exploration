@@ -256,7 +256,7 @@
   // Setting up starfield
   // ==================================
   // Setting up shape for starfield
-  var geometry = new THREE.SphereGeometry(2800, 60, 40);  
+  var geometry = new THREE.SphereGeometry(3500, 60, 40);  
   // Creating texture for space
   var skyTexture = { 
     texture: {type: 't', value: new THREE.TextureLoader().load("images/nebula.jpg")}
@@ -276,7 +276,8 @@
   skyBox.scale.set(-1, 1, 1);  
   skyBox.eulerOrder = 'XZY';  
   skyBox.renderDepth = 5000.0;  
-  scene.add(skyBox);  
+  scene.add(skyBox);
+
 
   // skyBox.position.copy(camera.position);
   // skyBox.rotation.copy(camera.rotation);
@@ -708,9 +709,15 @@
     sunPluto.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(plutoObj.rotationAroundSun)*speed();
     controls.update()
 
+    // rerendering skybox location
+    skyBox.position.x = camera.position.x
+    skyBox.position.y = camera.position.y
+    skyBox.position.z = camera.position.z
+
     renderer.render( scene, camera );
   }
   render();
+    console.log(camera);
 
 // <!-- garbage code -->
 
