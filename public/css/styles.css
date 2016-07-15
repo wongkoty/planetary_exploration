@@ -40,16 +40,21 @@ h3 {
 	background-repeat: no-repeat;*/	
 	display: inline-block;
 }
+@font-face {
+	font-family: "space-age";
+	src: url(../fonts/space-age.ttf);
+}
 button {
 	border: 0px;
 	background-color: white;
 	width: 3.5rem;
-	margin: 0px 1rem;
+	margin: 0px .5rem;
+	opacity: .4;
 }
 button:active {
-  font-size: 2rem;
-  width: 7rem;
-	margin: 0px 2rem;
+  font-size: 1.5rem;
+  width: 6rem;
+	margin: 0px 1rem;
 }
 .planets {
 	width: 60px;
@@ -57,10 +62,27 @@ button:active {
 	/*display: inline-block;*/
 	position: absolute;
 }
-.planets > button{
-
-}
 .planet-info {
-	position: relative;
-	top: 200%;
+	position: absolute;
+	bottom: 0%;
+	color: white;
+	right: 30%;
+	text-align: center;
+	width: 500px;
+	/*font-size: 1.5rem;*/
+	background-color: rgba(255, 255, 255, 0.2);
+	/*margin-right: auto;*/
+	/*margin-left: auto;*/
+	/*float: bottom;*/
+}
+.planet-info > h2 {
+	font-family: "space-age";
+	font-size: 3rem;
+	margin-top: .5rem;
+	margin-bottom: .5rem;
+}
+.planet-info > p {
+	margin-top: 6px;
+	margin-bottom: 6px;
+	font-family: "Arial", Helvetica, sans-serif;
 }

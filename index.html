@@ -21,6 +21,7 @@
 					</audio>
 				</div>
 				<div class="user-speeds">
+					<button class="half"><a>.5X</a></button>
 					<button class="one"><a>1X</a></button>
 					<button class="two"><a>2X</a></button>
 					<button class="four"><a>4X</a></button>
@@ -28,11 +29,9 @@
 					<h3 class="reset">Reset</h3>
 				</div>
 				
-
-		
-
-				<div class="planet-info"></div>
+				
 		</div>
+
 				<div class="planets">
 					<button class="sun">Sun</button>
 					<button class="mercury">Mercury</button>
@@ -46,11 +45,13 @@
 					<button class="pluto">Pluto</button>
 				</div>
 
+				<div id="planet-info-container">
+					<div class="planet-info"></div>
+				</div>
+
 		<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
 		<script type="text/javascript" src="/js/three.js"></script>
 		<script type="text/javascript" src="/js/orbitalcontrols.js"></script>
-		<script>
-		</script>
 		<script type="application/x-glsl" id="sky-vertex">  
 			varying vec2 vUV;
 

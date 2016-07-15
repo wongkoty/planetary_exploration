@@ -4,52 +4,63 @@
   
   var sunObj = {
     name: "Sun",
-    axisRotation: 24.47
+    axisRotation: 24.47,
+    radius: 432288
   }
   var mercuryObj = {
     name: "Mercury",
     axisRotation: 59,
-    rotationAroundSun: 88
+    rotationAroundSun: 88,
+    radius: 1516
   }
   var venusObj = {
     name: "Venus",
     axisRotation: 243,
-    rotationAroundSun: 224.7
+    rotationAroundSun: 224.7,
+    radius: 3760
   }
   var earthObj = {
     name: "Earth",
     axisRotation: 365.25,
-    rotationAroundSun: 365.25
+    rotationAroundSun: 365.25,
+    radius: 3959
   };
   var marsObj = {
     name: "Mars",
     axisRotation: 1.03009,
-    rotationAroundSun: 686.93
+    rotationAroundSun: 686.93,
+    radius: 2106
   };
   var jupiterObj = {
     name: "Jupiter",
     axisRotation: .33676,
-    rotationAroundSun: 4330.6
+    rotationAroundSun: 4330.6,
+    radius: 43441
   }
   var saturnObj = {
     name: "Saturn",
     axisRotation: .44499,
-    rotationAroundSun: 10755.7
+    rotationAroundSun: 10755.7,
+    radius: 36184
   }
   var uranusObj = {
     name: "Uranus",
     axisRotation: .72006,
-    rotationAroundSun: 30687
+    rotationAroundSun: 30687,
+    radius: 15759
+
   }
   var neptuneObj = {
     name: "Neptune",
     axisRotation: .79805,
-    rotationAroundSun: 60190
+    rotationAroundSun: 60190,
+    radius: 15299
   }
   var plutoObj = {
     name: "Pluto",
     axisRotation: 6.37605,
-    rotationAroundSun: 90520
+    rotationAroundSun: 90520,
+    radius: 736.9
   }
 
   // console.log(sunObj.axisRotation)
@@ -89,6 +100,11 @@
     controls.reset();
   });
 
+  $(".half").click(function() {
+    // console.log('one clicked')
+    speed(.5);
+  });
+
   $(".one").click(function() {
     // console.log('one clicked')
     speed(1);
@@ -112,53 +128,81 @@
   $(".sun").click(function() {
     console.log('sun');
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + sunObj.name + "</p>");
+    $(".planet-info").append("<h2>" + sunObj.name + "</h2>" +
+      "<p>How long it takes to spin on its axis: " + sunObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + sunObj.radius + "</p>");
   });
 
   $(".mercury").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + mercuryObj.name + "</p>" +
-      "<p>How long it takes in earth days to rotate around the sun: " + mercuryObj.rotationAroundSun + "</p>");
+    $(".planet-info").append("<h2>" + mercuryObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + mercuryObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + mercuryObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + mercuryObj.radius + "</p>");
   });
 
   $(".venus").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + venusObj.name + "</p>");
+    $(".planet-info").append("<h2>" + venusObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + venusObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + venusObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + venusObj.radius + "</p>");
   });
 
   $(".earth").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + earthObj.name + "</p>");
+    $(".planet-info").append("<h2>" + earthObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + earthObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + earthObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + earthObj.radius + "</p>");
   });
 
   $(".mars").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + marsObj.name + "</p>");
+    $(".planet-info").append("<h2>" + marsObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + marsObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + marsObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + marsObj.radius + "</p>");
   });
 
   $(".jupiter").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + jupiterObj.name + "</p>");
+    $(".planet-info").append("<h2>" + jupiterObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + jupiterObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + jupiterObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + jupiterObj.radius + "</p>");
   });
 
   $(".saturn").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + saturnObj.name + "</p>");
+    $(".planet-info").append("<h2>" + saturnObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + saturnObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + saturnObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + saturnObj.radius + "</p>");
   });
 
   $(".uranus").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + uranusObj.name + "</p>");
+    $(".planet-info").append("<h2>" + uranusObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + uranusObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + uranusObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + uranusObj.radius + "</p>");
   });
 
   $(".neptune").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + neptuneObj.name + "</p>");
+    $(".planet-info").append("<h2>" + neptuneObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + neptuneObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + neptuneObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + neptuneObj.radius + "</p>");
   });
 
   $(".pluto").click(function() {
     $(".planet-info").empty()
-    $(".planet-info").append("<p>" + plutoObj.name + "</p>");
+    $(".planet-info").append("<h2>" + plutoObj.name + "</h2>" +
+      "<p>How long it takes in earth days to rotate around the sun: " + plutoObj.rotationAroundSun + "</p>" +
+      "<p>How long it takes to spin on its axis: " + plutoObj.axisRotation + " earth days</p>" +
+      "<p>Radius in miles: " + plutoObj.radius + "</p>");
   });
 
   // set up scenes
@@ -187,7 +231,7 @@
   // camera.lookAt(new THREE.Vector3(1, 0, 0))
 
   //3D Axis helper for center of scene
-  scene.add(new THREE.AxisHelper(20));
+  // scene.add(new THREE.AxisHelper(20));
 
   // adds lighting from center of universe.
   var light = new THREE.PointLight( 0xFFFFFF, 1.5, 2500, 2 );
@@ -245,7 +289,7 @@
   //  Setting up the sun
   // ==================================
   //new shape for sun which is a sphere
-  var sunGeometry = new THREE.SphereGeometry(radiusLog(432288), 32, 32 );
+  var sunGeometry = new THREE.SphereGeometry(radiusLog(sunObj.radius), 32, 32 );
   // creating sun texture
   var sunTexture = new THREE.TextureLoader().load("images/sun.jpg")
   sunTexture.wrapS = THREE.RepeatWrapping;
@@ -273,7 +317,7 @@
   // ==================================
   //  Setting up Mercury
   // ==================================
-  var mercuryGeometry = new THREE.SphereGeometry(radiusLog(1516), 32, 32 );
+  var mercuryGeometry = new THREE.SphereGeometry(radiusLog(mercuryObj.radius), 32, 32 );
   var mercuryTexture = new THREE.TextureLoader().load("images/mercury.jpg")
   mercuryTexture.wrapS = THREE.RepeatWrapping;
   mercuryTexture.wrapT = THREE.RepeatWrapping;
@@ -284,12 +328,12 @@
   sunMercury.add(mercury);
   mercury.translateZ(orbitalScaler(35.96))
   mercury.rotation.set(30, 0, - Math.PI * 2.11 / 180 );
-  mercury.add(new THREE.AxisHelper( 10 ))
+  // mercury.add(new THREE.AxisHelper( 10 ))
 
   // pathing for mercury
   var curve = new THREE.EllipseCurve(
     0, 0,             // ax, aY
-    orbitalScaler(35.96), orbitalScaler(35.96),            // xRadius, yRadius
+    orbitalScaler(35.96), orbitalScaler(35.96),  // xRadius, yRadius
     0, 2 * Math.PI, // aStartAngle, aEndAngle
     false             // aClockwise
   );
@@ -315,7 +359,7 @@
   // ==================================
   //  Setting up Venus
   // ==================================
-  var venusGeometry = new THREE.SphereGeometry(radiusLog(3760), 32, 32 );
+  var venusGeometry = new THREE.SphereGeometry(radiusLog(venusObj.radius), 32, 32 );
   var venusTexture = new THREE.TextureLoader().load("images/venus.jpg")
   venusTexture.wrapS = THREE.RepeatWrapping;
   venusTexture.wrapT = THREE.RepeatWrapping;
@@ -326,7 +370,7 @@
   sunVenus.add(venus);
   venus.translateZ(orbitalScaler(67.24))
   venus.rotation.set(30, 0, - Math.PI * 177.4 / 180 );
-  venus.add(new THREE.AxisHelper( 10 ));
+  // venus.add(new THREE.AxisHelper( 10 ));
 
   var curve = new THREE.EllipseCurve(
     0, 0,
@@ -354,7 +398,7 @@
   // ==================================
   //  Setting up Earth
   // ==================================
-  var earthGeometry = new THREE.SphereGeometry(radiusLog(3959), 32, 32 );
+  var earthGeometry = new THREE.SphereGeometry(radiusLog(earthObj.radius), 32, 32 );
   var earthTexture = new THREE.TextureLoader().load("images/earth.jpg")
   earthTexture.wrapS = THREE.RepeatWrapping;
   earthTexture.wrapT = THREE.RepeatWrapping;
@@ -368,7 +412,7 @@
   // adding axial tilt
   earth.rotation.set(30, 0, - Math.PI * 23.4 / 180 );
   // earth.translateZ(23)
-  earth.add(new THREE.AxisHelper( 10 ))
+  // earth.add(new THREE.AxisHelper( 10 ))
 
   var curve = new THREE.EllipseCurve(
     0, 0,
@@ -383,6 +427,18 @@
   scene.add(arc);
   arc.rotation.set(11, 0, 0);
 
+   // ==================================
+  //  Setting up Earth/Moon
+  // ==================================
+  var earthMoonGeometry = new THREE.SphereGeometry(1, 32, 32 );
+  var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+  var earthMoon = new THREE.Mesh( earthMoonGeometry, material );
+  
+  // changes the orbital path
+  sunEarth.add( earthMoon );
+  earthMoon.translateZ(orbitalScaler(92.96))
+  earthMoon.rotation.set(-13, 0, 0);
+
   // ==================================
   //  Setting up Moon
   // ==================================
@@ -394,7 +450,7 @@
   var moon = new THREE.Mesh( moonGeometry, material );
 
   // add the moon to the earth
-  earth.add(moon);
+  earthMoon.add(moon);
   moon.translateZ(8.5);
 
   // ==================================
@@ -410,7 +466,7 @@
   // ==================================
   //  Setting up Mars
   // ==================================
-  var marsGeometry = new THREE.SphereGeometry(radiusLog(2106), 32, 32 );
+  var marsGeometry = new THREE.SphereGeometry(radiusLog(marsObj.radius), 32, 32 );
   var marsTexture = new THREE.TextureLoader().load("images/mars.jpg")
   marsTexture.wrapS = THREE.RepeatWrapping;
   marsTexture.wrapT = THREE.RepeatWrapping;
@@ -448,7 +504,7 @@
   // ==================================
   //  Setting up Jupiter
   // ==================================
-  var jupiterGeometry = new THREE.SphereGeometry(radiusLog(43,441), 32, 32 );
+  var jupiterGeometry = new THREE.SphereGeometry(radiusLog(jupiterObj.radius), 32, 32 );
   var jupiterTexture = new THREE.TextureLoader().load("images/jupiter.jpg")
   jupiterTexture.wrapS = THREE.RepeatWrapping;
   jupiterTexture.wrapT = THREE.RepeatWrapping;
@@ -484,7 +540,7 @@
   // ==================================
   //  Setting up Saturn
   // ==================================
-  var saturnGeometry = new THREE.SphereGeometry(radiusLog(36,184), 32, 32 );
+  var saturnGeometry = new THREE.SphereGeometry(radiusLog(saturnObj.radius), 32, 32 );
   var saturnTexture = new THREE.TextureLoader().load("images/saturn.jpg")
   saturnTexture.wrapS = THREE.RepeatWrapping;
   saturnTexture.wrapT = THREE.RepeatWrapping;
@@ -521,7 +577,7 @@
   // ==================================
   //  Setting up Uranus
   // ==================================
-  var uranusGeometry = new THREE.SphereGeometry(radiusLog(15,759), 32, 32 );
+  var uranusGeometry = new THREE.SphereGeometry(radiusLog(uranusObj.radius), 32, 32 );
   var uranusTexture = new THREE.TextureLoader().load("images/uranus.jpg")
   uranusTexture.wrapS = THREE.RepeatWrapping;
   uranusTexture.wrapT = THREE.RepeatWrapping;
@@ -557,7 +613,7 @@
   // ==================================
   //  Setting up Neptune
   // ==================================
-  var neptuneGeometry = new THREE.SphereGeometry(radiusLog(15,299), 32, 32 );
+  var neptuneGeometry = new THREE.SphereGeometry(radiusLog(neptuneObj.radius), 32, 32 );
   var neptuneTexture = new THREE.TextureLoader().load("images/neptune.jpg")
   neptuneTexture.wrapS = THREE.RepeatWrapping;
   neptuneTexture.wrapT = THREE.RepeatWrapping;
@@ -593,7 +649,7 @@
   // ==================================
   //  Setting up Pluto
   // ==================================
-  var plutoGeometry = new THREE.SphereGeometry(radiusLog(736.9), 32, 32 );
+  var plutoGeometry = new THREE.SphereGeometry(radiusLog(plutoObj.radius), 32, 32 );
   var plutoTexture = new THREE.TextureLoader().load("images/pluto.jpg")
   plutoTexture.wrapS = THREE.RepeatWrapping;
   plutoTexture.wrapT = THREE.RepeatWrapping;
@@ -632,6 +688,7 @@
     mercury.rotation.z += (Math.PI/450)*(earthObj.axisRotation/mercuryObj.axisRotation)*speed();
     venus.rotation.z -= (Math.PI/450)*(earthObj.axisRotation/venusObj.axisRotation)*speed();
     earth.rotation.z += (Math.PI/450)*(earthObj.axisRotation)*speed();
+    moon.rotation.z += (Math.PI/450)*27.33*speed()
     mars.rotation.z += (Math.PI/450)*(earthObj.axisRotation/marsObj.axisRotation)*speed();
     jupiter.rotation.z += (Math.PI/450)*(earthObj.axisRotation/jupiterObj.axisRotation)*speed();
     saturn.rotation.z += (Math.PI/450)*(earthObj.axisRotation/saturnObj.axisRotation)*speed();
@@ -642,6 +699,7 @@
     sunMercury.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(mercuryObj.rotationAroundSun)*speed();
     sunVenus.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(venusObj.rotationAroundSun)*speed();
     sunEarth.rotation.y += (Math.PI/450)*speed();
+    earthMoon.rotation.y += (Math.PI/450)*27.32*speed();
     sunMars.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(marsObj.rotationAroundSun)*speed();
     sunJupiter.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(jupiterObj.rotationAroundSun)*speed();
     sunSaturn.rotation.y += (Math.PI/450)*rotationAroundSunRelativeToEarth(saturnObj.rotationAroundSun)*speed();
