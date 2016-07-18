@@ -1,7 +1,3 @@
-  // ================
-  // Helper Methods
-  // ================
-  
   var sunObj = {
     name: "Sun",
     axisRotation: 24.47,
@@ -11,61 +7,71 @@
     name: "Mercury",
     axisRotation: 59,
     rotationAroundSun: 88,
-    radius: 1516
+    radius: 1516,
+    distanceFromSun: 35.96
   }
   var venusObj = {
     name: "Venus",
     axisRotation: 243,
     rotationAroundSun: 224.7,
-    radius: 3760
+    radius: 3760,
+    distanceFromSun: 67.24
   }
   var earthObj = {
     name: "Earth",
     axisRotation: 365.25,
     rotationAroundSun: 365.25,
-    radius: 3959
+    radius: 3959,
+    distanceFromSun: 92.96
   };
   var marsObj = {
     name: "Mars",
     axisRotation: 1.03009,
     rotationAroundSun: 686.93,
-    radius: 2106
+    radius: 2106,
+    distanceFromSun: 141.6
   };
   var jupiterObj = {
     name: "Jupiter",
     axisRotation: .33676,
     rotationAroundSun: 4330.6,
-    radius: 43441
+    radius: 43441,
+    distanceFromSun: 483.8
   }
   var saturnObj = {
     name: "Saturn",
     axisRotation: .44499,
     rotationAroundSun: 10755.7,
-    radius: 36184
+    radius: 36184,
+    distanceFromSun: 888.2
   }
   var uranusObj = {
     name: "Uranus",
     axisRotation: .72006,
     rotationAroundSun: 30687,
-    radius: 15759
-
+    radius: 15759,
+    distanceFromSun: 1787
   }
   var neptuneObj = {
     name: "Neptune",
     axisRotation: .79805,
     rotationAroundSun: 60190,
-    radius: 15299
+    radius: 15299,
+    distanceFromSun: 2795
   }
   var plutoObj = {
     name: "Pluto",
     axisRotation: 6.37605,
     rotationAroundSun: 90520,
-    radius: 736.9
+    radius: 736.9,
+    distanceFromSun: 3670
   }
 
   // console.log(sunObj.axisRotation)
 
-
+  // ================
+  // Helper Methods
+  // ================
   var orbitalScaler = function(distance) {
     return distance / Math.log(50)
   };
@@ -138,7 +144,8 @@
     $(".planet-info").append("<h2>" + mercuryObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + mercuryObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + mercuryObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + mercuryObj.radius + "</p>");
+      "<p>Radius in miles: " + mercuryObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " +  mercuryObj.distanceFromSun + "</p>");
   });
 
   $(".venus").click(function() {
@@ -146,7 +153,8 @@
     $(".planet-info").append("<h2>" + venusObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + venusObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + venusObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + venusObj.radius + "</p>");
+      "<p>Radius in miles: " + venusObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " + venusObj.distanceFromSun + "</p>");
   });
 
   $(".earth").click(function() {
@@ -154,7 +162,8 @@
     $(".planet-info").append("<h2>" + earthObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + earthObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + earthObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + earthObj.radius + "</p>");
+      "<p>Radius in miles: " + earthObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " + earthObj.distanceFromSun + "</p>");
   });
 
   $(".mars").click(function() {
@@ -162,7 +171,8 @@
     $(".planet-info").append("<h2>" + marsObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + marsObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + marsObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + marsObj.radius + "</p>");
+      "<p>Radius in miles: " + marsObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " + marsObj.distanceFromSun + "</p>");
   });
 
   $(".jupiter").click(function() {
@@ -170,7 +180,8 @@
     $(".planet-info").append("<h2>" + jupiterObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + jupiterObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + jupiterObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + jupiterObj.radius + "</p>");
+      "<p>Radius in miles: " + jupiterObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " + jupiterObj.distanceFromSun + "</p>");
   });
 
   $(".saturn").click(function() {
@@ -178,7 +189,8 @@
     $(".planet-info").append("<h2>" + saturnObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + saturnObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + saturnObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + saturnObj.radius + "</p>");
+      "<p>Radius in miles: " + saturnObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " + saturnObj.distanceFromSun + "</p>");
   });
 
   $(".uranus").click(function() {
@@ -186,7 +198,8 @@
     $(".planet-info").append("<h2>" + uranusObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + uranusObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + uranusObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + uranusObj.radius + "</p>");
+      "<p>Radius in miles: " + uranusObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " + uranusObj.distanceFromSun + "</p>");
   });
 
   $(".neptune").click(function() {
@@ -194,7 +207,8 @@
     $(".planet-info").append("<h2>" + neptuneObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + neptuneObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + neptuneObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + neptuneObj.radius + "</p>");
+      "<p>Radius in miles: " + neptuneObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " + neptuneObj.distanceFromSun + "</p>");
   });
 
   $(".pluto").click(function() {
@@ -202,18 +216,12 @@
     $(".planet-info").append("<h2>" + plutoObj.name + "</h2>" +
       "<p>How long it takes in earth days to rotate around the sun: " + plutoObj.rotationAroundSun + "</p>" +
       "<p>How long it takes to spin on its axis: " + plutoObj.axisRotation + " earth days</p>" +
-      "<p>Radius in miles: " + plutoObj.radius + "</p>");
+      "<p>Radius in miles: " + plutoObj.radius + "</p>" +
+      "<p>Distance from sun in millions of miles: " + plutoObj.distanceFromSun + "</p>");
   });
 
   // set up scenes
   var scene = new THREE.Scene();
-
-  // loader
-  // THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
-  //     console.log( item, loaded, total );
-  // };
-
-  // scene.add( new THREE.Fog(0xffffff, 0.015, 100) )
 
   // set up camera
   var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 10000 );
@@ -242,16 +250,6 @@
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
-  // var a = new THREE.Vector2(200, 0);
-  // var b = new THREE.Vector2(1000, 0);
-
-  // var path = new THREE.Path([a, b])
-
-  // path.splineThru
-
-  // var d = a.distanceTo(b);
-  // console.log(d)
-
   // ==================================
   // Setting up starfield
   // ==================================
@@ -277,14 +275,6 @@
   skyBox.eulerOrder = 'XZY';  
   skyBox.renderDepth = 5000.0;  
   scene.add(skyBox);
-
-
-  // skyBox.position.copy(camera.position);
-  // skyBox.rotation.copy(camera.rotation);
-  // skyBox.updateMatrix();
-  // skyBox.translateZ(-10);
-  // camera.lookAt(skyBox);
-  // skyBox.add(camera);
 
   // ==================================
   //  Setting up the sun
@@ -312,7 +302,6 @@
   var material = new THREE.MeshBasicMaterial({color: 0xffffff});
   var sunMercury = new THREE.Mesh( sunMercuryGeometry, material );
   
-  // changes the orbital path
   scene.add( sunMercury );
   
   // ==================================
@@ -325,16 +314,16 @@
   var material = new THREE.MeshPhongMaterial({map: mercuryTexture});
   var mercury = new THREE.Mesh( mercuryGeometry, material );
   
-  // adds venus to sun. Might have to add to something else to change orbital path
+  // adds mercury to sun. Might have to add to something else to change orbital path
   sunMercury.add(mercury);
-  mercury.translateZ(orbitalScaler(35.96))
+  mercury.translateZ(orbitalScaler(mercuryObj.distanceFromSun))
   mercury.rotation.set(30, 0, - Math.PI * 2.11 / 180 );
   // mercury.add(new THREE.AxisHelper( 10 ))
 
   // pathing for mercury
   var curve = new THREE.EllipseCurve(
     0, 0,             // ax, aY
-    orbitalScaler(35.96), orbitalScaler(35.96),  // xRadius, yRadius
+    orbitalScaler(mercuryObj.distanceFromSun), orbitalScaler(mercuryObj.distanceFromSun),  // xRadius, yRadius
     0, 2 * Math.PI, // aStartAngle, aEndAngle
     false             // aClockwise
   );
@@ -354,7 +343,6 @@
   var material = new THREE.MeshBasicMaterial({color: 0xffffff});
   var sunVenus = new THREE.Mesh( sunVenusGeometry, material );
   
-  // changes the orbital path
   scene.add( sunVenus );
 
   // ==================================
@@ -369,13 +357,13 @@
   
   // adds venus to sun. Might have to add to something else to change orbital path
   sunVenus.add(venus);
-  venus.translateZ(orbitalScaler(67.24))
+  venus.translateZ(orbitalScaler(venusObj.distanceFromSun))
   venus.rotation.set(30, 0, - Math.PI * 177.4 / 180 );
   // venus.add(new THREE.AxisHelper( 10 ));
 
   var curve = new THREE.EllipseCurve(
     0, 0,
-    orbitalScaler(67.24), orbitalScaler(67.24),
+    orbitalScaler(venusObj.distanceFromSun), orbitalScaler(venusObj.distanceFromSun),
     0, 2 * Math.PI,
     false 
   );
@@ -408,7 +396,7 @@
   
   // adds the earth to the scene - might have to add to something else to change orbital path
   sunEarth.add( earth );
-  earth.translateZ(orbitalScaler(92.96));
+  earth.translateZ(orbitalScaler(earthObj.distanceFromSun));
   // earth.rotateX(-30)
   // adding axial tilt
   earth.rotation.set(30, 0, - Math.PI * 23.4 / 180 );
@@ -417,7 +405,7 @@
 
   var curve = new THREE.EllipseCurve(
     0, 0,
-    orbitalScaler(92.96), orbitalScaler(92.96),
+    orbitalScaler(earthObj.distanceFromSun), orbitalScaler(earthObj.distanceFromSun),
     0, 2 * Math.PI,
     false 
   );
@@ -475,12 +463,12 @@
   var mars = new THREE.Mesh( marsGeometry, material );
 
   sunMars.add(mars);
-  mars.translateZ(orbitalScaler(141.6));
+  mars.translateZ(orbitalScaler(marsObj.distanceFromSun));
   mars.rotation.set(30, 0, - Math.PI * 25 / 180 );
 
   var curve = new THREE.EllipseCurve(
     0, 0,
-    orbitalScaler(141.6), orbitalScaler(141.6),
+    orbitalScaler(marsObj.distanceFromSun), orbitalScaler(marsObj.distanceFromSun),
     0, 2 * Math.PI,
     false 
   );
@@ -513,12 +501,12 @@
   var jupiter = new THREE.Mesh( jupiterGeometry, material );
 
   sunJupiter.add(jupiter);
-  jupiter.translateZ(orbitalScaler(483.8));
+  jupiter.translateZ(orbitalScaler(jupiterObj.distanceFromSun));
   jupiter.rotation.set(30, 0, - Math.PI * 3.13 / 180);
 
   var curve = new THREE.EllipseCurve(
     0, 0,
-    orbitalScaler(483.8), orbitalScaler(483.8),
+    orbitalScaler(jupiterObj.distanceFromSun), orbitalScaler(jupiterObj.distanceFromSun),
     0, 2 * Math.PI,
     false 
   );
@@ -550,12 +538,12 @@
 
   // add the moon to the earth
   sunSaturn.add(saturn);
-  saturn.translateZ(orbitalScaler(888.2));
+  saturn.translateZ(orbitalScaler(saturnObj.distanceFromSun));
   saturn.rotation.set(30, 0, - Math.PI * 26.7 / 180);
 
   var curve = new THREE.EllipseCurve(
     0, 0,
-    orbitalScaler(888.2), orbitalScaler(888.2),
+    orbitalScaler(saturnObj.distanceFromSun), orbitalScaler(saturnObj.distanceFromSun),
     0, 2 * Math.PI,
     false 
   );
@@ -586,12 +574,12 @@
   var uranus = new THREE.Mesh( uranusGeometry, material );
 
   sunUranus.add(uranus);
-  uranus.translateZ(orbitalScaler(1787));
+  uranus.translateZ(orbitalScaler(uranusObj.distanceFromSun));
   uranus.rotation.set(30, 0, - Math.PI * 97.77 / 180 );
 
   var curve = new THREE.EllipseCurve(
     0, 0,
-    orbitalScaler(1787), orbitalScaler(1787),
+    orbitalScaler(uranusObj.distanceFromSun), orbitalScaler(uranusObj.distanceFromSun),
     0, 2 * Math.PI,
     false 
   );
@@ -622,12 +610,12 @@
   var neptune = new THREE.Mesh( neptuneGeometry, material );
 
   sunNeptune.add(neptune);
-  neptune.translateZ(orbitalScaler(2795));
+  neptune.translateZ(orbitalScaler(neptuneObj.distanceFromSun));
   neptune.rotation.set(30, 0, - Math.PI * 28.32/ 180 );
 
   var curve = new THREE.EllipseCurve(
     0, 0,
-    orbitalScaler(2795), orbitalScaler(2795),
+    orbitalScaler(neptuneObj.distanceFromSun), orbitalScaler(neptuneObj.distanceFromSun),
     0, 2 * Math.PI,
     false 
   );
@@ -659,12 +647,12 @@
 
   // add the moon to the earth
   sunPluto.add(pluto);
-  pluto.translateZ(orbitalScaler(3670));
+  pluto.translateZ(orbitalScaler(plutoObj.distanceFromSun));
   pluto.rotation.set(30, 0, - Math.PI * 119.61 / 180 );
 
   var curve = new THREE.EllipseCurve(
     0, 0,
-    orbitalScaler(3670), orbitalScaler(3670),
+    orbitalScaler(plutoObj.distanceFromSun), orbitalScaler(plutoObj.distanceFromSun),
     0, 2 * Math.PI,
     false 
   );
@@ -835,3 +823,28 @@
     // earth.rotation.x += 0.005;
     // earth.rotation.y += 0.005;
     // spacesphere.rotation.y += 0.001;
+
+
+  // loader
+  // THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
+  //     console.log( item, loaded, total );
+  // };
+
+  // scene.add( new THREE.Fog(0xffffff, 0.015, 100) )
+
+
+  // skyBox.position.copy(camera.position);
+  // skyBox.rotation.copy(camera.rotation);
+  // skyBox.updateMatrix();
+  // skyBox.translateZ(-10);
+  // camera.lookAt(skyBox);
+  // skyBox.add(camera);
+    // var a = new THREE.Vector2(200, 0);
+  // var b = new THREE.Vector2(1000, 0);
+
+  // var path = new THREE.Path([a, b])
+
+  // path.splineThru
+
+  // var d = a.distanceTo(b);
+  // console.log(d)
