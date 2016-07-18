@@ -1,6 +1,6 @@
 # Space Exploration
 
-[https://fooddate.herokuapp.com/](https://fooddate.herokuapp.com/)
+[https://spaceexploration.herokuapp.com/](https://spaceexploration.herokuapp.com/)
 
 ## Description
 Space Exploration is a 3D rendering app of our solar system and allows users to find information about planets and float around in the solar system.
